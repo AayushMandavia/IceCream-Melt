@@ -137,7 +137,7 @@ export default function ScoopLoader({ name, cone, scoop }: { name: string; cone:
       </div>
       <div ref={word} className="relative flex flex-col items-center gap-2" style={{ opacity: 0 }}>
         <span className="font-display text-[clamp(36px,5vw,64px)] text-accent">{name}</span>
-        <span className="text-[12px] font-extrabold tracking-[0.3em] text-[#2b1233]/60 uppercase">Hand-churned in Hyderabad</span>
+        <span className="text-[12px] font-extrabold tracking-[0.3em] text-[#2b1233]/60 uppercase">Hand-churned daily</span>
       </div>
     </div>
   );

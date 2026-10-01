@@ -168,7 +168,7 @@ export default function Patterns() {
         eyebrow="Customer love"
         heading="Joy that travels with you"
         text="Real people, real moments — tilted polaroids that straighten on hover."
-        items={photos.slice(0, 6).map((p, i) => ({ image: p, quote: ["Best weekend ever.", "Pure magic at sunset.", "Worth every rupee.", "I'd go again tomorrow.", "Unreal service.", "A dream drive."][i], name: ["Rahul K.", "Ananya S.", "Vikram R.", "Meera P.", "Arjun D.", "Kavya N."][i], place: ["Mumbai", "Goa", "Pune", "Delhi", "Chennai", "Hyderabad"][i] }))}
+        items={photos.slice(0, 6).map((p, i) => ({ image: p, quote: ["Best weekend ever.", "Pure magic at sunset.", "Worth every rupee.", "I'd go again tomorrow.", "Unreal service.", "A dream drive."][i], name: ["Rahul K.", "Ananya S.", "Vikram R.", "Meera P.", "Arjun D.", "Kavya N."][i], place: ["Mumbai", "Goa", "Pune", "Delhi", "Chennai", "Kolkata"][i] }))}
       />
       <Label n={9} name="Polaroid reviews" file="PolaroidWall.tsx" />
 

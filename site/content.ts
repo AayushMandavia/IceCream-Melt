@@ -32,7 +32,7 @@ export const hero = {
   word: "MELT",
   pill: { label: "Flavour of the week", value: "Double ka Meetha" },
   heading: ["Small batch.", "*Big* feelings."],
-  text: "Hand-churned in Hyderabad every morning, never more than 20 litres at a time. Real fruit, real milk, no shortcuts.",
+  text: "Hand-churned every morning, never more than 20 litres at a time. Real fruit, real milk, no shortcuts.",
   ctas: [
     { label: "Pick your scoop", href: "#flavours" },
     { label: "Find a parlour", href: "#parlours" },
@@ -48,7 +48,7 @@ export const hero = {
 
 export const wave = {
   top: ["Pistachio Malai", "Alphonso Mango", "Filter Coffee", "Double ka Meetha", "Sitaphal", "Belgian Cocoa"],
-  bottom: ["Hand-churned daily", "Small batch", "Made in Hyderabad", "No shortcuts"],
+  bottom: ["Hand-churned daily", "Small batch", "Made fresh", "No shortcuts"],
 };
 
 export type Flavour = {
@@ -66,7 +66,7 @@ export const flavours: Flavour[] = [
   { id: "pistachio", name: "Pistachio Malai", note: "Roasted pistachios folded into slow-cooked malai", price: 140, tag: "Bestseller", fill: FLAVOUR.pistachio, ink: "#2b1233", image: "/images/melt/scoop-pistachio.webp" },
   { id: "mango", name: "Alphonso Mango", note: "Ratnagiri Alphonsos, only while the season lasts", price: 140, tag: "Seasonal", fill: FLAVOUR.mango, ink: "#2b1233", image: "/images/melt/scoop-mango.webp" },
   { id: "strawberry", name: "Strawberry Cream", note: "Fresh berries with a ripple of homemade jam", price: 140, tag: "Kids' pick", fill: FLAVOUR.strawberry, ink: "#2b1233", image: "/images/melt/scoop-strawberry.webp" },
-  { id: "coffee", name: "Filter Coffee", note: "Real decoction, a little jaggery, very Hyderabad", price: 150, tag: "New", fill: FLAVOUR.coffee, ink: "#2b1233", image: "/images/melt/scoop-coffee.webp" },
+  { id: "coffee", name: "Filter Coffee", note: "Real decoction, a little jaggery, very authentic", price: 150, tag: "New", fill: FLAVOUR.coffee, ink: "#2b1233", image: "/images/melt/scoop-coffee.webp" },
   { id: "cocoa", name: "Belgian Cocoa", note: "70% dark chocolate with fudgy chunks", price: 160, tag: "Vegan", fill: FLAVOUR.cocoa, ink: "#fff1e6", image: "/images/melt/scoop-cocoa.webp" },
   { id: "meetha", name: "Double ka Meetha", note: "Saffron cream, caramelised bread, toasted almonds", price: 160, tag: "Only here", fill: FLAVOUR.meetha, ink: "#2b1233", image: "/images/melt/scoop-meetha.webp" },
 ];
@@ -83,7 +83,7 @@ const byId = (id: string) => flavours.find((f) => f.id === id)!;
 export const builder = {
   eyebrow: "Build your cone",
   heading: ["Build your", "*cone*"],
-  text: "Pick three scoops. We stack them on a waffle cone baked the same morning.",
+  text: "Pick up to three scoops. We stack them on a waffle cone baked the same morning.",
   cone: "/images/melt/cone-empty.webp",
   coneLine: { name: "Waffle cone", price: "Free" },
   scoops: [byId("pistachio"), byId("mango"), byId("cocoa")],
@@ -152,7 +152,7 @@ export const notes = {
 export const parlours = {
   eyebrow: "Our parlours",
   heading: ["Come say", "*hi*"],
-  text: "Three pink parlours across Hyderabad. Walk in, sample everything, take your time.",
+  text: "Three pink parlours in the city. Walk in, sample everything, take your time.",
   photo: { photo: "/images/melt/parlour.webp", tone: FLAVOUR.pistachio, hint: "Parlour interior" },
   items: [
     { name: "Jubilee Hills", note: "The first one. Garden seating.", hours: "12 PM – 11 PM", late: "Till midnight Fri–Sun" },

@@ -203,14 +203,14 @@ export default function ScoopStacker() {
             </div>
             <button
               onClick={() => {
-                if (selectedScoops.length === 3 && !ordered.current) {
+                if (selectedScoops.length > 0 && !ordered.current) {
                   ordered.current = true;
                   addToOrder();
                   setDone(true);
                 }
               }}
-              className={`btn mt-3 w-full justify-center lg:mt-5 ${selectedScoops.length === 3 ? "btn-solid" : "btn-outline opacity-50"}`}
-              disabled={selectedScoops.length < 3 || done}
+              className={`btn mt-3 w-full justify-center lg:mt-5 ${selectedScoops.length > 0 ? "btn-solid" : "btn-outline opacity-50"}`}
+              disabled={selectedScoops.length === 0 || done}
             >
               {done ? `Added to order ✓` : `${builder.cta} · ₹${total}`}
             </button>
