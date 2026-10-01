@@ -49,7 +49,7 @@ export default function ScoopStacker() {
     const tl = gsap.timeline();
     tl.fromTo(
       dropEl,
-      { y: -window.innerHeight * 0.8, rotate: k % 2 ? 5 : -5 },
+      { y: -window.innerHeight * 1.1, rotate: k % 2 ? 5 : -5 },
       { y: 0, rotate: 0, duration: 0.5, ease: "power2.in" }
     );
     tl.fromTo(
@@ -138,7 +138,7 @@ export default function ScoopStacker() {
                 ref={(el) => {
                   drops.current[k] = el;
                 }}
-                className="absolute left-0 w-full transition-all duration-500 ease-out"
+                className="absolute left-0 w-full transition-[bottom] duration-500 ease-out"
                 style={{ bottom: `calc(var(--u) * ${1.55 + k * 0.72})`, zIndex: 10 + k }}
               >
                 <img
