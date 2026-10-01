@@ -135,31 +135,36 @@ export default function SlowChurn() {
 
       <div className="sticky top-0 flex h-[100svh] items-center pt-[calc(var(--nav-h)-16px)] pb-4 md:pb-6 [.is-static_&]:relative">
         <div className="container-x h-full">
-          <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-[32px] md:block md:rounded-[48px]" style={{ background: slow.panel }}>
-            <div className="relative z-[1] px-6 md:max-w-[40%] md:p-14">
-              <p className="eyebrow">{slow.eyebrow}</p>
-              <Heading lines={slow.heading} className="mt-4 text-[clamp(42px,5.6vw,100px)] md:mt-5" />
-              <p className="mt-5 hidden max-w-[360px] text-[17px] leading-relaxed text-fg/80 md:block">{slow.text}</p>
-            </div>
+          <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-[32px] md:flex-row md:items-stretch md:justify-between md:rounded-[48px]" style={{ background: slow.panel }}>
+            
+            {/* Left text column: text on top, stickers at the bottom - guaranteed zero overlap */}
+            <div className="relative z-[1] flex flex-col justify-between px-6 py-6 md:h-full md:w-[48%] md:max-w-[540px] md:p-10 lg:p-14">
+              <div>
+                <p className="eyebrow">{slow.eyebrow}</p>
+                <Heading lines={slow.heading} className="mt-3 text-[clamp(34px,4.5vw,68px)] leading-[1.05] md:mt-5" />
+                <p className="mt-4 hidden max-w-[360px] text-[15px] leading-relaxed text-fg/80 md:block lg:text-[17px]">{slow.text}</p>
+              </div>
 
-            <div className="relative z-[1] mt-5 flex gap-2 px-5 md:static md:mt-0 md:px-0">
-              {slow.captions.map((c, i) => (
-                <div
-                  key={c.title}
-                  data-sticker={i}
-                  className={`relative grid aspect-square w-[88px] shrink-0 place-items-center rounded-full text-center text-[#2b1233] shadow-[0_18px_30px_-14px_rgba(80,20,40,.45)] md:absolute md:w-[clamp(130px,11.5vw,190px)] ${c.pos}`}
-                  style={{ background: c.fill }}
-                >
-                  <div className="px-2 md:px-3">
-                    <p className="font-display text-[17px] leading-none md:text-[clamp(22px,2.1vw,34px)]">{c.title}</p>
-                    <p className="mt-1 text-[12px] leading-tight font-bold md:text-[14px]">{c.text}</p>
+              {/* Stickers at the bottom of the column */}
+              <div className="mt-5 flex items-center gap-2.5 sm:gap-3 md:mt-6 md:gap-3 lg:gap-4">
+                {slow.captions.map((c, i) => (
+                  <div
+                    key={c.title}
+                    data-sticker={i}
+                    className={`relative grid aspect-square w-[86px] shrink-0 place-items-center rounded-full text-center text-[#2b1233] shadow-[0_18px_30px_-14px_rgba(80,20,40,.45)] transition-transform hover:scale-105 md:w-[clamp(100px,8.8vw,144px)] ${i === 1 ? "md:-translate-y-2" : ""}`}
+                    style={{ background: c.fill }}
+                  >
+                    <div className="px-2 md:px-3">
+                      <p className="font-display text-[15px] leading-none md:text-[clamp(17px,1.5vw,25px)]">{c.title}</p>
+                      <p className="mt-1 text-[11px] leading-tight font-bold md:text-[13px]">{c.text}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
-            {/* phone: under the stickers, the whole bowl in view · laptop: the right 64% of the panel */}
-            <canvas ref={canvas} role="img" aria-label={slow.alt} className="pour-canvas relative mt-6 block aspect-[16/9.6] w-full md:absolute md:inset-y-0 md:right-0 md:mt-0 md:aspect-auto md:h-full md:w-[64%]" />
+            {/* phone: under the stickers, the whole bowl in view · laptop: the right 56% of the panel */}
+            <canvas ref={canvas} role="img" aria-label={slow.alt} className="pour-canvas relative mt-4 block aspect-[16/9.6] w-full md:absolute md:inset-y-0 md:right-0 md:mt-0 md:aspect-auto md:h-full md:w-[56%]" />
           </div>
         </div>
       </div>
