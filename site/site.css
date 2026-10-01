@@ -1,0 +1,244 @@
+/* Melt Theory: a strawberry-milk parlour that melts. Pink page, round chunky type, everything rounded, sections drip. */
+
+:root {
+  --nav-h: 96px; /* floating pill + its gap */
+  --pistachio: #bfe3a6;
+  --mango: #ffcf4d;
+  --strawberry: #ffc2d4;
+  --blueberry: #a9bfff;
+  --cocoa: #6b3a2a;
+  --accent-deep: #a3134a; /* the candy button's "bottom" */
+  --soft-shadow: 0 18px 40px -18px rgba(120, 20, 60, 0.28);
+}
+@media (max-width: 767px) {
+  :root {
+    --nav-h: 80px;
+  }
+}
+
+/* no film grain on a bright candy page */
+.grain::after {
+  display: none;
+}
+
+.font-display {
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.012em;
+}
+/* one hand-written word per heading: *word* in content.ts */
+.script {
+  font-family: "Caveat Variable", cursive;
+  font-weight: 700;
+  color: var(--accent);
+  display: inline-block;
+  font-size: 1.12em;
+  line-height: 0.8;
+  transform: rotate(-4deg);
+  padding-inline: 0.04em;
+}
+.tnum {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Eyebrow: a small white pill with a pink dot */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.95rem 0.5rem 0.8rem;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  box-shadow: 0 6px 16px -10px rgba(120, 20, 60, 0.35);
+}
+.eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Candy buttons: round pills with a chunky "bottom" that presses in */
+.btn {
+  padding: 1rem 1.7rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, color 0.3s ease, background-color 0.3s ease;
+}
+@media (max-width: 767px) {
+  .btn {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+.btn-solid {
+  background: var(--accent);
+  color: var(--accent-text);
+  box-shadow: 0 5px 0 var(--accent-deep), 0 16px 26px -14px rgba(163, 19, 74, 0.7);
+}
+.btn-solid:hover {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--accent-deep), 0 10px 18px -12px rgba(163, 19, 74, 0.7);
+}
+.btn-outline {
+  border: 0;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 5px 0 #f0c3d1, 0 16px 26px -16px rgba(120, 20, 60, 0.4);
+}
+.btn-outline::before {
+  display: none;
+}
+.btn-outline:hover {
+  color: var(--accent);
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #f0c3d1;
+}
+
+/* soft pill tag */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--text);
+}
+
+/* Capsule card: fully round top */
+.capsule {
+  border-radius: 999px 999px 36px 36px;
+}
+.arch {
+  border-radius: 999px 999px 32px 32px;
+}
+
+/* ---------- hero ---------- */
+.float-soft {
+  animation: float-soft 6.5s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform;
+}
+@keyframes float-soft {
+  from { transform: translate3d(0, -1.2%, 0) rotate(-0.8deg); }
+  to { transform: translate3d(0, 1.2%, 0) rotate(0.8deg); }
+}
+.drift {
+  animation: drift 7s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  from { translate: 0 -10px; }
+  to { translate: 0 12px; }
+}
+/* the soft blob behind the cone: its corners slowly morph */
+.blob {
+  border-radius: 46% 54% 58% 42% / 52% 44% 56% 48%;
+  animation: blob 14s ease-in-out infinite alternate;
+}
+@keyframes blob {
+  50% { border-radius: 56% 44% 42% 58% / 44% 58% 42% 56%; }
+  100% { border-radius: 42% 58% 50% 50% / 58% 46% 54% 42%; }
+}
+
+/* ---------- flavour wave ---------- */
+.wave-text {
+  font-family: var(--font-display-family);
+  font-weight: 600;
+}
+
+/* ---------- scoop stacker ---------- */
+.stack-tint {
+  transition: background-color 0.7s ease;
+}
+.receipt-line {
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.receipt-line.is-off {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.dash {
+  border-top: 2px dashed var(--line);
+}
+.order-bump {
+  animation: order-bump 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes order-bump {
+  35% { transform: scale(1.45); }
+}
+
+/* ---------- deals ---------- */
+.spin-slow {
+  animation: spin 16s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- photo placeholder (until the real photos are in) ---------- */
+.ph {
+  background-image:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.45), transparent 45%),
+    radial-gradient(circle at 80% 90%, rgba(0, 0, 0, 0.08), transparent 50%);
+}
+
+/* footer input */
+.pill-input {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  outline: none;
+  color: inherit;
+  padding: 0.9rem 1.3rem;
+}
+.pill-input::placeholder {
+  color: rgba(255, 241, 244, 0.75);
+}
+.pill-input:focus {
+  border-color: #fff;
+}
+
+/* ?static=1 (class set by the loader) and reduced motion: everything still */
+.is-static .float-soft,
+.is-static .drift,
+.is-static .blob,
+.is-static .spin-slow {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .float-soft,
+  .drift,
+  .blob,
+  .spin-slow {
+    animation: none;
+  }
+}
+
+/* Made slow: the pour video fades into the pink panel (from the top on phones, from the left on laptops) */
+.pour-canvas {
+  mask-image: linear-gradient(180deg, transparent, #000 22%);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%);
+}
+@media (min-width: 768px) {
+  .pour-canvas {
+    mask-image: linear-gradient(90deg, transparent, #000 20%);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%);
+  }
+}
