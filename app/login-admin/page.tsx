@@ -172,8 +172,8 @@ export default function AdminLoginPage() {
               Staff access for orders, inventory &amp; parlours.
             </p>
 
-            {/* Live Operations Row with hand-drawn pink mark */}
-            <div className="flex items-center gap-3.5 mt-5">
+            {/* Live Operations Row */}
+            <div className="mt-5">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#f4d3dd] shadow-sm text-[13px] font-bold text-[#241126]">
                 <span className="relative flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -181,64 +181,50 @@ export default function AdminLoginPage() {
                 </span>
                 <span>Live operations</span>
               </div>
-
-              {/* Hand-drawn pink accent stroke matching reference */}
-              <svg
-                className="w-5 h-7 text-[#d61c5d] opacity-80 rotate-6"
-                viewBox="0 0 20 28"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M3 4h12l-7 20" />
-                <path d="M5 14h8" />
-              </svg>
             </div>
 
             {/* Stats Capsule Card matching user image */}
-            <div className="mt-3.5 flex items-center gap-3.5 sm:gap-4 bg-white/95 border border-[#f4d3dd] rounded-2xl p-2.5 px-3.5 shadow-[0_8px_22px_-8px_rgba(120,20,60,0.1)] w-max">
+            <div className="mt-3.5 relative z-20 flex items-center gap-2.5 sm:gap-3 bg-white/95 border border-[#f4d3dd] rounded-2xl p-2 px-3 shadow-[0_6px_20px_-6px_rgba(120,20,60,0.12)] w-max">
               {/* 1. Live Orders */}
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2">
                 <span className="w-7 h-7 rounded-full bg-[#fdeef2] flex items-center justify-center text-xs">
                   🛒
                 </span>
                 <div>
-                  <span className="font-['Fredoka_Variable',sans-serif] font-black text-[#241126] text-base leading-none block">
+                  <span className="font-['Fredoka_Variable',sans-serif] font-black text-[#241126] text-[15px] leading-none block">
                     48
                   </span>
-                  <span className="text-[10.5px] font-semibold text-[#8c6b79] leading-tight block mt-0.5">
+                  <span className="text-[10px] font-semibold text-[#8c6b79] leading-tight block mt-0.5">
                     Live orders
                   </span>
                 </div>
               </div>
               <div className="w-px h-6 bg-[#f4d3dd]" />
               {/* 2. Low Stock */}
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2">
                 <span className="w-7 h-7 rounded-full bg-[#fff4e6] flex items-center justify-center text-xs">
                   📦
                 </span>
                 <div>
-                  <span className="font-['Fredoka_Variable',sans-serif] font-black text-[#241126] text-base leading-none block">
+                  <span className="font-['Fredoka_Variable',sans-serif] font-black text-[#241126] text-[15px] leading-none block">
                     6
                   </span>
-                  <span className="text-[10.5px] font-semibold text-[#8c6b79] leading-tight block mt-0.5">
+                  <span className="text-[10px] font-semibold text-[#8c6b79] leading-tight block mt-0.5">
                     Low stock
                   </span>
                 </div>
               </div>
               <div className="w-px h-6 bg-[#f4d3dd]" />
               {/* 3. Parlours open */}
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2">
                 <span className="w-7 h-7 rounded-full bg-[#fdeef2] flex items-center justify-center text-xs">
                   🏪
                 </span>
                 <div>
-                  <span className="font-['Fredoka_Variable',sans-serif] font-black text-[#241126] text-base leading-none block">
+                  <span className="font-['Fredoka_Variable',sans-serif] font-black text-[#241126] text-[15px] leading-none block">
                     3
                   </span>
-                  <span className="text-[10.5px] font-semibold text-[#8c6b79] leading-tight block mt-0.5">
+                  <span className="text-[10px] font-semibold text-[#8c6b79] leading-tight block mt-0.5">
                     Parlours open
                   </span>
                 </div>
@@ -246,7 +232,7 @@ export default function AdminLoginPage() {
             </div>
 
             {/* Handwritten Note & Arrow pointing to Cone */}
-            <div className="mt-4 flex items-center gap-2">
+            <div className="mt-4 relative z-20 flex items-center gap-2">
               <span className="font-['Caveat_Variable',cursive] text-[17px] font-bold text-[#241126] italic">
                 Good ice-cream runs on great people.
               </span>
@@ -265,7 +251,7 @@ export default function AdminLoginPage() {
           </div>
 
           {/* Ice Cream Cone Hero Composite Image (SS5 asset: login-cone-hero.png) */}
-          <div className="hidden md:block absolute -right-6 bottom-[-15px] lg:right-[-25px] lg:bottom-[-20px] w-[350px] lg:w-[415px] pointer-events-none select-none z-30">
+          <div className="hidden md:block absolute -right-4 bottom-[-15px] lg:right-[-15px] lg:bottom-[-20px] w-[310px] lg:w-[365px] pointer-events-none select-none z-10">
             <img
               src="/images/login/login-cone-hero.png"
               alt="Melt Triple Scoop Cone with Toppings"
