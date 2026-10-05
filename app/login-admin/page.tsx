@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/frontend/modules/auth/auth-client';
 
@@ -106,250 +107,195 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(180deg, #fff1f4 0%, #fae6ec 100%)',
-        color: '#2b1233',
-        fontFamily: 'var(--font-body-family), system-ui, sans-serif',
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      {/* ========================================================================= */}
-      {/* Top Header Bar */}
-      {/* ========================================================================= */}
-      <header
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 100,
-          padding: '1rem 1.5rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '1rem',
-        }}
-      >
-        {/* Back to Public Showcase */}
-        <Link
-          href="/"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.45rem 1rem',
-            background: 'rgba(255, 255, 255, 0.95)',
-            border: '1px solid #f4d3dd',
-            borderRadius: '9999px',
-            textDecoration: 'none',
-            color: '#2b1233',
-            fontSize: '0.875rem',
-            fontWeight: 800,
-            boxShadow: '0 8px 24px -10px rgba(120, 20, 60, 0.2)',
-            transition: 'all 0.15s ease',
-          }}
-        >
-          <span>🍦</span>
-          <span style={{ fontFamily: 'var(--font-display-family)', color: '#d61c5d' }}>Melt Theory</span>
-          <span style={{ color: '#8c6b79', fontWeight: 600 }}>← Back to Store</span>
-        </Link>
+    <div className="min-h-screen bg-[#fff1f4] relative flex items-center justify-center p-3 sm:p-6 lg:p-10 overflow-hidden font-['Nunito_Variable',sans-serif] text-[#2b1233]">
+      {/* Decorative Pastel Background Blobs matching SS1 */}
+      <div className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#fddbe3]/60 blur-3xl -z-10" />
+      <div className="pointer-events-none absolute -bottom-32 -right-32 w-[520px] h-[520px] rounded-full bg-[#fecdd6]/50 blur-3xl -z-10" />
+      <div className="pointer-events-none absolute top-1/2 left-10 -translate-y-1/2 w-80 h-80 rounded-full bg-[#ffe4ec]/60 blur-2xl -z-10" />
 
+      {/* Main Split Container Card (SS1) */}
+      <div className="relative w-full max-w-[1140px] bg-white/95 backdrop-blur-xl border border-[#f4d3dd] rounded-[36px] md:rounded-[44px] shadow-[0_28px_85px_-20px_rgba(120,20,60,0.22)] overflow-hidden grid grid-cols-1 lg:grid-cols-[1.14fr_0.86fr] min-h-[590px]">
         {/* ========================================================================= */}
-        {/* ss3 Login Navigation Bar: ONLY SHOWN ONCE LOGGED IN */}
+        {/* Left Column: Brand Showcase, Heading, Stats & Cone Hero (SS1)             */}
         {/* ========================================================================= */}
-        {isLoggedIn ? (
-          <div
-            style={{
-              display: 'flex',
-              gap: '0.65rem',
-              alignItems: 'center',
-              background: 'rgba(255, 255, 255, 0.95)',
-              backdropFilter: 'blur(16px)',
-              border: '1px solid #f4d3dd',
-              borderRadius: '9999px',
-              padding: '0.35rem 0.5rem 0.35rem 1rem',
-              boxShadow: '0 14px 40px -16px rgba(120, 20, 60, 0.35)',
-            }}
-          >
-            <span
-              style={{
-                fontSize: '0.8125rem',
-                fontWeight: 700,
-                color: '#2b1233',
-                fontFamily: 'var(--font-display-family)',
-              }}
-            >
-              Order Desk:
-            </span>
+        <div className="p-7 sm:p-9 md:p-11 flex flex-col justify-between relative bg-gradient-to-br from-[#fff7f9] via-[#fef2f5] to-[#fdeef2] overflow-hidden">
+          {/* Top Brand Link Row */}
+          <div className="flex items-center gap-3 relative z-20">
             <Link
-              href="/order"
-              style={{
-                padding: '0.45rem 1rem',
-                background: '#d61c5d',
-                color: '#ffffff',
-                borderRadius: '9999px',
-                textDecoration: 'none',
-                fontSize: '0.8125rem',
-                fontWeight: 800,
-                boxShadow: '0 3px 0 #a3134a',
-                transition: 'all 0.15s ease',
-              }}
+              href="/"
+              className="group inline-flex items-center gap-2 text-[15px] font-bold text-[#2b1233] transition-colors"
             >
-              🍦 Order Online
+              <span className="text-xl">🍦</span>
+              <span className="font-['Fredoka_Variable',sans-serif] text-lg font-black text-[#d61c5d] tracking-wide">
+                Melt Theory
+              </span>
             </Link>
+            <span className="text-[#f4d3dd] text-base select-none">|</span>
             <Link
-              href="/operator"
-              style={{
-                padding: '0.45rem 0.95rem',
-                background: '#fff1f4',
-                border: '1px solid #f4d3dd',
-                color: '#2b1233',
-                borderRadius: '9999px',
-                textDecoration: 'none',
-                fontSize: '0.8125rem',
-                fontWeight: 700,
-                transition: 'all 0.15s ease',
-              }}
+              href="/"
+              className="inline-flex items-center gap-1.5 text-[13.5px] font-bold text-[#6f5569] hover:text-[#2b1233] transition-colors"
             >
-              📋 Operator Desk
+              <span>←</span>
+              <span>Back to store</span>
             </Link>
-            <Link
-              href="/owner"
-              style={{
-                padding: '0.45rem 0.95rem',
-                background: '#fff1f4',
-                border: '1px solid #f4d3dd',
-                color: '#2b1233',
-                borderRadius: '9999px',
-                textDecoration: 'none',
-                fontSize: '0.8125rem',
-                fontWeight: 700,
-                transition: 'all 0.15s ease',
-              }}
-            >
-              👑 Owner Portal
-            </Link>
-            <button
-              type="button"
-              onClick={handleLogout}
-              title="Sign Out of Session"
-              style={{
-                padding: '0.45rem 0.75rem',
-                background: '#ffffff',
-                border: '1px solid #f4d3dd',
-                color: '#a3134a',
-                borderRadius: '9999px',
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                transition: 'all 0.15s ease',
-              }}
-            >
-              🔓 Sign Out
-            </button>
           </div>
-        ) : null}
-      </header>
 
-      {/* ========================================================================= */}
-      {/* Admin Login Panel Container */}
-      {/* ========================================================================= */}
-      <main
-        style={{
-          flex: 1,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '2rem 1.25rem 4rem',
-        }}
-      >
-        <div
-          style={{
-            width: '100%',
-            maxWidth: '520px',
-            background: 'rgba(255, 255, 255, 0.96)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid #f4d3dd',
-            borderRadius: '32px',
-            padding: '2.25rem',
-            boxShadow: '0 24px 60px -20px rgba(120, 20, 60, 0.25)',
-          }}
-        >
-          {/* Header */}
-          <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
-            <span style={{ fontSize: '3rem', display: 'inline-block', marginBottom: '0.5rem' }}>🔐</span>
-            <h1
-              style={{
-                fontFamily: 'var(--font-display-family)',
-                fontSize: '1.85rem',
-                fontWeight: 900,
-                color: '#2b1233',
-                lineHeight: 1.15,
-                margin: 0,
-              }}
-            >
-              Staff &amp; Admin Panel
+          {/* Middle Content: Heading, Subtext, Live Badge & Stats */}
+          <div className="mt-8 mb-6 relative z-20 max-w-[360px]">
+            {/* Display Heading with Caveat Script word "scoops" */}
+            <h1 className="font-['Fredoka_Variable',sans-serif] text-[clamp(42px,4.4vw,64px)] font-black text-[#2b1233] leading-[1.04] tracking-tight">
+              Keep the <br />
+              <span className="font-['Caveat_Variable',cursive] text-[#d61c5d] text-[1.2em] font-normal italic inline-block -rotate-2 transform">
+                scoops
+              </span>{' '}
+              <br />
+              moving.
             </h1>
-            <p style={{ color: '#7a5a67', fontSize: '0.925rem', marginTop: '0.45rem', lineHeight: 1.4 }}>
-              Authenticate with your management PIN to access live order fulfillment, inventory, and analytics.
+
+            {/* Subtext */}
+            <p className="mt-3.5 text-[15.5px] font-semibold text-[#6f5569] leading-snug">
+              Staff access for orders, inventory &amp; parlours.
+            </p>
+
+            {/* Live Operations Pill */}
+            <div className="inline-flex items-center gap-2 mt-6 px-3.5 py-1.5 rounded-full bg-white border border-[#f4d3dd] shadow-sm text-[13px] font-bold text-[#2b1233]">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+              <span>Live operations</span>
+            </div>
+
+            {/* Stats Capsule Card */}
+            <div className="mt-3.5 flex items-center gap-4 sm:gap-5 bg-white/95 border border-[#f4d3dd] rounded-2xl p-3 px-4 shadow-[0_8px_20px_-8px_rgba(120,20,60,0.12)] w-max">
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-full bg-[#fff1f4] flex items-center justify-center text-sm">🛒</span>
+                <div>
+                  <span className="font-['Fredoka_Variable',sans-serif] font-black text-[#2b1233] text-base leading-none block">
+                    48
+                  </span>
+                  <span className="text-[11px] font-semibold text-[#8c6b79] leading-tight block mt-0.5">
+                    Live orders
+                  </span>
+                </div>
+              </div>
+              <div className="w-px h-7 bg-[#f4d3dd]" />
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-full bg-[#fff1f4] flex items-center justify-center text-sm">📦</span>
+                <div>
+                  <span className="font-['Fredoka_Variable',sans-serif] font-black text-[#2b1233] text-base leading-none block">
+                    6
+                  </span>
+                  <span className="text-[11px] font-semibold text-[#8c6b79] leading-tight block mt-0.5">
+                    Low stock
+                  </span>
+                </div>
+              </div>
+              <div className="w-px h-7 bg-[#f4d3dd]" />
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-full bg-[#fff1f4] flex items-center justify-center text-sm">🏪</span>
+                <div>
+                  <span className="font-['Fredoka_Variable',sans-serif] font-black text-[#2b1233] text-base leading-none block">
+                    3
+                  </span>
+                  <span className="text-[11px] font-semibold text-[#8c6b79] leading-tight block mt-0.5">
+                    Parlours open
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Handwritten Note & Arrow */}
+            <div className="mt-5 flex items-center gap-2">
+              <span className="font-['Caveat_Variable',cursive] text-[18px] font-semibold text-[#2b1233] italic">
+                Good ice-cream runs on great people.
+              </span>
+              <svg
+                className="w-7 h-7 text-[#d61c5d] rotate-12 shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M4 12c5 4 10 3 14-2m0 0l-4-1m4 1l-2 4" />
+              </svg>
+            </div>
+          </div>
+
+          {/* Cone Hero Illustration with Pink Backdrop Blob & Floating Toppings (SS1) */}
+          <div className="hidden md:block absolute -right-2 bottom-[-15px] lg:right-4 lg:bottom-[-20px] w-[270px] lg:w-[325px] pointer-events-none select-none z-10">
+            {/* Soft pink organic circular blob behind cone */}
+            <div className="absolute top-[48%] right-2 -translate-y-1/2 w-[240px] h-[240px] rounded-full bg-[#fecdd6]/75 blur-md -z-10" />
+
+            {/* Triple scoop waffle cone */}
+            <img
+              src="/images/melt/cone-hero.webp"
+              alt="Melt Triple Scoop Cone"
+              className="w-full h-auto drop-shadow-[0_22px_38px_rgba(120,20,60,0.28)]"
+            />
+
+            {/* Floating Toppings around cone */}
+            <img
+              src="/images/melt/topping-strawberry.webp"
+              alt="Strawberry"
+              className="absolute top-[40%] right-[6%] w-11 h-auto -rotate-12 drop-shadow-md"
+            />
+            <img
+              src="/images/melt/topping-chocolate.webp"
+              alt="Chocolate"
+              className="absolute bottom-[42%] left-[2%] w-10 h-auto rotate-12 drop-shadow-md"
+            />
+            <img
+              src="/images/melt/topping-pistachio.webp"
+              alt="Pistachio"
+              className="absolute top-[16%] right-[20%] w-8 h-auto rotate-45 drop-shadow-sm"
+            />
+          </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* Right Column: Crisp White Portal Login Card (SS1)                         */}
+        {/* ========================================================================= */}
+        <div className="bg-white rounded-[32px] md:rounded-[40px] p-6 sm:p-8 md:p-10 m-2 sm:m-3.5 shadow-[0_18px_45px_-12px_rgba(120,20,60,0.14)] border border-[#f4d3dd]/80 flex flex-col justify-center relative z-20">
+          {/* Card Header: Brand Icon, Title & Subtitle */}
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center justify-center gap-1.5 text-[#d61c5d] font-['Fredoka_Variable',sans-serif] text-base font-bold">
+              <span>🍦</span>
+              <span>Melt Theory</span>
+            </div>
+            <h2 className="font-['Fredoka_Variable',sans-serif] text-[27px] font-black text-[#2b1233] leading-tight mt-1.5">
+              Staff &amp; Admin Portal
+            </h2>
+            <p className="text-[13.5px] font-semibold text-[#6f5569] mt-1.5 max-w-[320px] mx-auto leading-relaxed">
+              Authenticate with your management PIN to access live order fulfilment, inventory, and analytics.
             </p>
 
             {isLoggedIn && (
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.45rem',
-                  marginTop: '0.85rem',
-                  padding: '0.4rem 1rem',
-                  borderRadius: '9999px',
-                  background: '#e9f8ed',
-                  color: '#1a7536',
-                  fontSize: '0.8125rem',
-                  fontWeight: 700,
-                  border: '1px solid #c3ebcd',
-                }}
-              >
-                <span>●</span> Session Active: {loggedInRole ?? 'Verified'}
+              <div className="inline-flex items-center gap-2 mt-3 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200">
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>Active Session: {loggedInRole ?? 'Verified'}</span>
               </div>
             )}
           </div>
 
-          {/* Portal Switcher Tabs */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              background: '#fff1f4',
-              padding: '0.35rem',
-              borderRadius: '16px',
-              gap: '0.35rem',
-              marginBottom: '1.5rem',
-            }}
-          >
+          {/* Portal Switcher Tabs (Owner Portal vs Operator Desk) */}
+          <div className="grid grid-cols-2 bg-[#fff1f4] p-1.5 rounded-2xl gap-1.5 mb-5 border border-[#f4d3dd]/60">
             <button
               type="button"
               onClick={() => {
                 setSelectedRole('owner');
                 setError(null);
               }}
-              style={{
-                padding: '0.65rem 0.5rem',
-                borderRadius: '12px',
-                border: 'none',
-                background: selectedRole === 'owner' ? '#ffffff' : 'transparent',
-                color: selectedRole === 'owner' ? '#d61c5d' : '#7a5a67',
-                fontWeight: selectedRole === 'owner' ? 800 : 600,
-                fontSize: '0.875rem',
-                cursor: 'pointer',
-                boxShadow: selectedRole === 'owner' ? '0 4px 12px rgba(120, 20, 60, 0.12)' : 'none',
-                transition: 'all 0.15s ease',
-              }}
+              className={`py-2.5 px-3 rounded-xl text-xs sm:text-[13px] font-extrabold transition-all flex items-center justify-center gap-1.5 ${
+                selectedRole === 'owner'
+                  ? 'bg-white text-[#d61c5d] shadow-[0_4px_12px_rgba(120,20,60,0.12)]'
+                  : 'text-[#6f5569] hover:text-[#2b1233]'
+              }`}
             >
-              👑 Owner Portal
+              <span>👑</span>
+              <span>Owner Portal</span>
             </button>
             <button
               type="button"
@@ -357,53 +303,29 @@ export default function AdminLoginPage() {
                 setSelectedRole('operator');
                 setError(null);
               }}
-              style={{
-                padding: '0.65rem 0.5rem',
-                borderRadius: '12px',
-                border: 'none',
-                background: selectedRole === 'operator' ? '#ffffff' : 'transparent',
-                color: selectedRole === 'operator' ? '#d61c5d' : '#7a5a67',
-                fontWeight: selectedRole === 'operator' ? 800 : 600,
-                fontSize: '0.875rem',
-                cursor: 'pointer',
-                boxShadow: selectedRole === 'operator' ? '0 4px 12px rgba(120, 20, 60, 0.12)' : 'none',
-                transition: 'all 0.15s ease',
-              }}
+              className={`py-2.5 px-3 rounded-xl text-xs sm:text-[13px] font-extrabold transition-all flex items-center justify-center gap-1.5 ${
+                selectedRole === 'operator'
+                  ? 'bg-white text-[#d61c5d] shadow-[0_4px_12px_rgba(120,20,60,0.12)]'
+                  : 'text-[#6f5569] hover:text-[#2b1233]'
+              }`}
             >
-              📋 Operator Desk
+              <span>📋</span>
+              <span>Operator Desk</span>
             </button>
           </div>
 
-          {/* Login Form */}
-          <form onSubmit={handleLogin}>
-            {/* Operator Branch Selection */}
+          {/* Authentication Form */}
+          <form onSubmit={handleLogin} className="space-y-4">
+            {/* Operator Branch Selector */}
             {selectedRole === 'operator' && (
-              <div style={{ marginBottom: '1.25rem' }}>
-                <label
-                  style={{
-                    display: 'block',
-                    fontSize: '0.8125rem',
-                    fontWeight: 700,
-                    color: '#2b1233',
-                    marginBottom: '0.4rem',
-                  }}
-                >
-                  Branch Location
+              <div className="text-left">
+                <label className="block text-xs font-bold text-[#2b1233] mb-1.5">
+                  Select Branch Parlour
                 </label>
                 <select
                   value={branch}
                   onChange={(e) => setBranch(e.target.value as 'branch-alpha' | 'branch-beta')}
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem 1rem',
-                    borderRadius: '14px',
-                    border: '1.5px solid #f4d3dd',
-                    background: '#ffffff',
-                    color: '#2b1233',
-                    fontSize: '0.925rem',
-                    fontWeight: 600,
-                    outline: 'none',
-                  }}
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#f4d3dd] bg-[#fffafb] text-[#2b1233] text-sm font-bold focus:outline-none focus:border-[#d61c5d]"
                 >
                   <option value="branch-alpha">Jubilee Hills Parlour (Alpha)</option>
                   <option value="branch-beta">Gachibowli Parlour (Beta)</option>
@@ -411,179 +333,98 @@ export default function AdminLoginPage() {
               </div>
             )}
 
-            {/* PIN Input */}
-            <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
-                <label style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#2b1233' }}>
+            {/* PIN Header row & Input Box */}
+            <div className="text-left">
+              <div className="flex justify-between items-center mb-1.5">
+                <label className="text-xs font-bold text-[#2b1233]">
                   Management Security PIN
                 </label>
                 <button
                   type="button"
                   onClick={() => setPin('123456')}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    padding: 0,
-                    fontSize: '0.75rem',
-                    color: '#d61c5d',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    textDecoration: 'underline',
-                  }}
+                  className="text-xs font-bold text-[#d61c5d] hover:underline"
                   title="Click to fill default PIN"
                 >
                   Default PIN: 123456
                 </button>
               </div>
-              <div style={{ position: 'relative' }}>
+
+              {/* Password Input with Lock Icon inside */}
+              <div className="relative">
                 <input
                   type={showPin ? 'text' : 'password'}
                   maxLength={6}
                   value={pin}
                   onChange={(e) => setPin(e.target.value)}
-                  placeholder="Enter 6-digit PIN"
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem 2.5rem 0.75rem 1rem',
-                    borderRadius: '14px',
-                    border: '1.5px solid #f4d3dd',
-                    background: '#ffffff',
-                    color: '#2b1233',
-                    fontSize: '1.25rem',
-                    fontWeight: 800,
-                    letterSpacing: showPin ? '0.15em' : '0.3em',
-                    textAlign: 'center',
-                    outline: 'none',
-                  }}
+                  placeholder="••••••"
+                  className="w-full h-13 px-4 pr-12 rounded-2xl border border-[#f4d3dd] bg-white text-center text-xl font-black text-[#2b1233] tracking-[0.4em] focus:outline-none focus:border-[#d61c5d] focus:ring-2 focus:ring-[#d61c5d]/20 transition-all shadow-inner placeholder:tracking-[0.4em]"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPin(!showPin)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-lg text-[#8c6b79] hover:text-[#2b1233] transition-colors"
                   title={showPin ? 'Hide PIN' : 'Show PIN'}
-                  style={{
-                    position: 'absolute',
-                    right: '0.75rem',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    background: 'none',
-                    border: 'none',
-                    fontSize: '1rem',
-                    cursor: 'pointer',
-                    color: '#8c6b79',
-                  }}
                 >
                   {showPin ? '👁️' : '🔒'}
                 </button>
               </div>
             </div>
 
+            {/* Error Message */}
             {error && (
-              <div
-                style={{
-                  padding: '0.65rem 1rem',
-                  borderRadius: '12px',
-                  background: '#ffeef2',
-                  border: '1px solid #f8c7d3',
-                  color: '#b31548',
-                  fontSize: '0.8125rem',
-                  fontWeight: 600,
-                  marginBottom: '1.25rem',
-                }}
-              >
+              <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold text-center">
                 {error}
               </div>
             )}
 
-            {/* Submit Button */}
+            {/* Unlock Button */}
             <button
               type="submit"
               disabled={loading}
-              style={{
-                width: '100%',
-                padding: '0.875rem',
-                background: '#d61c5d',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '16px',
-                fontSize: '0.95rem',
-                fontWeight: 800,
-                cursor: loading ? 'wait' : 'pointer',
-                boxShadow: '0 4px 14px rgba(214, 28, 93, 0.35)',
-                transition: 'all 0.15s ease',
-              }}
+              className="w-full h-13 rounded-2xl bg-[#d61c5d] hover:bg-[#b8144d] text-white font-extrabold text-[15px] shadow-[0_10px_25px_-5px_rgba(214,28,93,0.42)] transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-wait"
             >
-              {loading
-                ? 'Authenticating...'
-                : selectedRole === 'owner'
-                ? 'Unlock & Enter Owner Portal →'
-                : 'Unlock & Enter Operator Desk →'}
+              {loading ? (
+                <span>Authenticating...</span>
+              ) : (
+                <span>Unlock portal →</span>
+              )}
             </button>
           </form>
 
-          {/* Quick Shortcuts (Available when session is verified) */}
+          {/* Footer Security Badge */}
+          <div className="mt-5 text-center flex items-center justify-center gap-1.5 text-[11.5px] font-semibold text-[#8c6b79]">
+            <span>🛡️</span>
+            <span>Secure access • Authorized staff only</span>
+          </div>
+
+          {/* Quick shortcuts if already logged in */}
           {isLoggedIn && (
-            <div
-              style={{
-                marginTop: '1.75rem',
-                paddingTop: '1.25rem',
-                borderTop: '1px solid #f4d3dd',
-                textAlign: 'center',
-              }}
-            >
-              <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#8c6b79', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.75rem' }}>
-                ⚡ Direct Portal Access
-              </p>
-              <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <div className="mt-5 pt-4 border-t border-[#f4d3dd] text-center">
+              <div className="flex items-center justify-center gap-2 flex-wrap">
                 <Link
                   href="/owner"
-                  style={{
-                    padding: '0.45rem 0.95rem',
-                    borderRadius: '9999px',
-                    background: '#fff1f4',
-                    border: '1px solid #f4d3dd',
-                    color: '#2b1233',
-                    textDecoration: 'none',
-                    fontSize: '0.8125rem',
-                    fontWeight: 700,
-                  }}
+                  className="text-xs font-bold px-3 py-1.5 rounded-full bg-[#fff1f4] text-[#d61c5d] border border-[#f4d3dd] hover:bg-white transition-colors"
                 >
-                  👑 Owner Portal →
+                  👑 Owner Desk
                 </Link>
                 <Link
                   href="/operator?branch=alpha"
-                  style={{
-                    padding: '0.45rem 0.95rem',
-                    borderRadius: '9999px',
-                    background: '#fff1f4',
-                    border: '1px solid #f4d3dd',
-                    color: '#2b1233',
-                    textDecoration: 'none',
-                    fontSize: '0.8125rem',
-                    fontWeight: 700,
-                  }}
+                  className="text-xs font-bold px-3 py-1.5 rounded-full bg-[#fff1f4] text-[#d61c5d] border border-[#f4d3dd] hover:bg-white transition-colors"
                 >
-                  📋 Jubilee Hills Desk →
+                  📋 Jubilee Hills
                 </Link>
-                <Link
-                  href="/operator?branch=beta"
-                  style={{
-                    padding: '0.45rem 0.95rem',
-                    borderRadius: '9999px',
-                    background: '#fff1f4',
-                    border: '1px solid #f4d3dd',
-                    color: '#2b1233',
-                    textDecoration: 'none',
-                    fontSize: '0.8125rem',
-                    fontWeight: 700,
-                  }}
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="text-xs font-bold px-3 py-1.5 rounded-full bg-white text-rose-600 border border-rose-200 hover:bg-rose-50 transition-colors"
                 >
-                  📋 Gachibowli Desk →
-                </Link>
+                  Sign Out
+                </button>
               </div>
             </div>
           )}
         </div>
-      </main>
+      </div>
     </div>
   );
 }
