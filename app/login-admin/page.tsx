@@ -122,11 +122,11 @@ export default function AdminLoginPage() {
       }}
     >
       {/* Single Main Split Container Card matching user mockup */}
-      <div className="relative w-full max-w-[1040px] bg-gradient-to-br from-[#fff7f9] via-[#fef2f5] to-[#fdeef2] border border-[#f7cfd8] rounded-[36px] md:rounded-[44px] shadow-[0_24px_70px_-15px_rgba(200,40,80,0.18)] overflow-hidden grid grid-cols-1 lg:grid-cols-[1.18fr_0.82fr] min-h-[560px]">
+      <div className="relative w-full max-w-[1060px] bg-gradient-to-br from-[#fff7f9] via-[#fef2f5] to-[#fdeef2] border border-[#f7cfd8] rounded-[36px] md:rounded-[44px] shadow-[0_24px_70px_-15px_rgba(200,40,80,0.18)] grid grid-cols-1 lg:grid-cols-[1.14fr_0.86fr] min-h-[570px] lg:min-h-[600px] overflow-visible">
         {/* ========================================================================= */}
-        {/* Left Column: Brand, Heading, Live Badge, Stats & Hero Cone                */}
+        {/* Left Column: Brand, Heading, Live Badge, Stats & Notes                    */}
         {/* ========================================================================= */}
-        <div className="p-7 sm:p-9 md:p-11 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-[#fff7f9] via-[#fef2f5] to-[#fdeef2]">
+        <div className="p-7 sm:p-9 md:p-11 flex flex-col justify-between relative bg-gradient-to-br from-[#fff7f9] via-[#fef2f5] to-[#fdeef2] rounded-l-[36px] md:rounded-l-[44px]">
           {/* Top Brand Link Row */}
           <div className="flex items-center gap-3 relative z-30">
             <Link
@@ -149,18 +149,18 @@ export default function AdminLoginPage() {
           </div>
 
           {/* Middle Left Content */}
-          <div className="mt-7 mb-5 relative z-30 max-w-[340px]">
+          <div className="mt-6 mb-4 relative z-30 max-w-[320px]">
             {/* Hand-drawn dynamic burst lines above top scoop */}
-            <div className="absolute -top-5 right-[-85px] hidden md:flex gap-1 select-none pointer-events-none text-[#d61c5d] text-xl font-bold rotate-12 opacity-85">
+            <div className="absolute -top-3 right-[-90px] hidden md:flex gap-1 select-none pointer-events-none text-[#d61c5d] text-xl font-bold rotate-12 opacity-85">
               <span>\</span>
               <span>\</span>
               <span>\</span>
             </div>
 
             {/* Display Heading with Caveat Script word "scoops" */}
-            <h1 className="font-['Fredoka_Variable',sans-serif] text-[clamp(44px,4.6vw,64px)] font-black text-[#241126] leading-[1.04] tracking-tight">
+            <h1 className="font-['Fredoka_Variable',sans-serif] text-[clamp(44px,4.5vw,62px)] font-black text-[#241126] leading-[1.04] tracking-tight">
               Keep the <br />
-              <span className="font-['Caveat_Variable',cursive] text-[#d61c5d] text-[1.24em] font-normal italic inline-block -rotate-3 transform">
+              <span className="font-['Caveat_Variable',cursive] text-[#d61c5d] text-[1.26em] font-normal italic inline-block -rotate-3 transform -my-1">
                 scoops
               </span>{' '}
               <br />
@@ -234,11 +234,12 @@ export default function AdminLoginPage() {
 
             {/* Handwritten Note & Arrow pointing to Cone */}
             <div className="mt-4 relative z-20 flex items-center gap-2">
-              <span className="font-['Caveat_Variable',cursive] text-[17px] font-bold text-[#241126] italic">
-                Good ice-cream runs on great people.
+              <span className="font-['Caveat_Variable',cursive] text-[18px] font-bold text-[#241126] italic leading-tight">
+                Good ice-cream <br />
+                runs on great people.
               </span>
               <svg
-                className="w-7 h-7 text-[#d61c5d] rotate-12 shrink-0"
+                className="w-8 h-8 text-[#d61c5d] rotate-6 shrink-0 mt-2"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -250,36 +251,36 @@ export default function AdminLoginPage() {
               </svg>
             </div>
           </div>
+        </div>
 
-          {/* Ice Cream Cone Hero Composite Image (SS5 asset: login-cone-hero.png) */}
-          <div className="hidden md:block absolute -right-4 bottom-[-15px] lg:right-[-15px] lg:bottom-[-20px] w-[310px] lg:w-[365px] pointer-events-none select-none z-10">
-            <img
-              src="/images/login/login-cone-hero.png"
-              alt="Melt Triple Scoop Cone with Toppings"
-              className="w-full h-auto drop-shadow-[0_24px_45px_rgba(140,20,60,0.22)]"
-            />
-          </div>
+        {/* Ice Cream Cone Hero Composite Image (SS2 replica: elevated, bigger, breaking out) */}
+        <div className="hidden lg:block absolute left-[45.5%] -translate-x-1/2 -top-9 xl:-top-12 w-[470px] xl:w-[515px] pointer-events-none select-none z-30">
+          <img
+            src="/images/login/login-cone-hero.png"
+            alt="Melt Triple Scoop Cone with Toppings"
+            className="w-full h-auto drop-shadow-[0_28px_52px_rgba(140,20,60,0.22)]"
+          />
         </div>
 
         {/* ========================================================================= */}
         {/* Right Column: Crisp White Portal Login Section with Seamless Wave Edge    */}
         {/* ========================================================================= */}
-        <div className="relative bg-white flex flex-col justify-center px-6 sm:px-10 lg:px-14 py-9 sm:py-11 z-20">
+        <div className="relative bg-white flex flex-col justify-center px-6 sm:px-10 lg:px-14 py-9 sm:py-11 z-20 rounded-r-[36px] md:rounded-r-[44px]">
           {/* Organic Liquid Wave Divider along left edge (Seamlessly joins white column to pink column) */}
-          <div className="hidden lg:block absolute top-0 bottom-0 -left-[54px] w-[55px] h-full pointer-events-none z-10 overflow-visible">
+          <div className="hidden lg:block absolute top-0 bottom-0 -left-[74px] w-[75px] h-full pointer-events-none z-10 overflow-visible">
             <svg
-              viewBox="0 0 100 485"
+              viewBox="0 0 100 500"
               preserveAspectRatio="none"
               className="w-full h-full text-white fill-current drop-shadow-[-6px_0_14px_rgba(180,40,80,0.05)]"
             >
               <path
-                d="M 48 0 C 53 6, 52 12, 45 16 C 36 21, 30 25, 30 36 C 30 46, 38 55, 43 65 C 47 72, 48 76, 48 85 L 48 260 C 47 268, 44 275, 40 282 C 32 292, 22 302, 19 318 C 16 330, 0 338, 0 355 C 0 372, 38 377, 46 385 C 48 388, 48 392, 48 400 L 48 430 C 47 440, 46 450, 46 460 C 46 470, 48 475, 56 485 L 100 485 L 100 0 Z"
+                d="M 60 0 C 65 35, 88 65, 88 100 C 88 150, 24 175, 24 235 C 24 295, 78 320, 78 375 C 78 425, 48 460, 48 500 L 100 500 L 100 0 Z"
                 fill="#ffffff"
               />
             </svg>
           </div>
 
-          <div className="max-w-[310px] mx-auto w-full relative z-20">
+          <div className="max-w-[320px] mx-auto w-full relative z-20">
             {/* Card Content Header */}
             <div className="text-center mb-4">
               <div className="inline-flex items-center justify-center gap-1.5 text-[#d61c5d] font-['Fredoka_Variable',sans-serif] text-[15px] font-bold">
