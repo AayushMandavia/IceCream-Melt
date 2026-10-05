@@ -81,6 +81,9 @@ export function getDatabase(context?: { env?: CloudflareEnv } | CloudflareEnv): 
             if (fs.existsSync(cand)) {
               try {
                 fs.copyFileSync(cand, targetDbPath);
+                try {
+                  fs.chmodSync(targetDbPath, 0o666);
+                } catch {}
                 copied = true;
                 break;
               } catch (copyErr) {
@@ -105,6 +108,12 @@ export function getDatabase(context?: { env?: CloudflareEnv } | CloudflareEnv): 
             fs.copyFileSync(seedDbPath, targetDbPath);
           }
         }
+      }
+
+      if (fs.existsSync(targetDbPath)) {
+        try {
+          fs.chmodSync(targetDbPath, 0o666);
+        } catch {}
       }
 
       // eslint-disable-next-line @typescript-eslint/no-require-imports

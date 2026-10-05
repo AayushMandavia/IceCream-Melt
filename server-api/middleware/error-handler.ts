@@ -4,7 +4,8 @@ import { ApiErrorCode } from '../../shared/enums/errors.enum';
 import { HTTP_STATUS } from '../../shared/constants/api.constants';
 
 export function handleApiError(error: unknown, additionalHeaders?: Record<string, string>): Response {
-  const isProductionLike = process.env.NODE_ENV === 'production' || (process.env.NODE_ENV as string) === 'staging' || process.env.APP_ENV === 'staging';
+  console.error('[API ERROR]:', error);
+  const isProductionLike = false; // allow informative messages on Vercel preview/production for debugging
 
   if (error instanceof AppError) {
     const message = isProductionLike && error.statusCode >= 500
@@ -15,16 +16,16 @@ export function handleApiError(error: unknown, additionalHeaders?: Record<string
     return errorResponse(error.code, message, details, error.statusCode, additionalHeaders);
   }
 
-  const sanitizedMessage = isProductionLike
-    ? 'An internal server error occurred'
-    : error instanceof Error
-      ? error.message
+  const sanitizedMessage = error instanceof Error
+    ? error.message
+    : typeof error === 'string'
+      ? error
       : 'Unknown server error';
 
   return errorResponse(
     ApiErrorCode.INTERNAL_ERROR,
     sanitizedMessage,
-    undefined,
+    error instanceof Error ? { stack: error.stack } : undefined,
     HTTP_STATUS.INTERNAL_SERVER_ERROR,
     additionalHeaders,
   );
