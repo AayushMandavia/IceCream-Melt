@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/frontend/modules/auth/auth-client';
 
@@ -94,9 +93,15 @@ export default function AdminLoginPage() {
       localStorage.setItem('melt_session_token', json.data.sessionToken);
       authClient.setSessionToken(json.data.sessionToken);
       setIsLoggedIn(true);
-      setLoggedInRole(isOwner ? 'Store Owner (Enterprise)' : branch === 'branch-beta' ? 'Operator Lead (Gachibowli)' : 'Operator Lead (Jubilee Hills)');
+      setLoggedInRole(
+        isOwner
+          ? 'Store Owner (Enterprise)'
+          : branch === 'branch-beta'
+          ? 'Operator Lead (Gachibowli)'
+          : 'Operator Lead (Jubilee Hills)'
+      );
 
-      // 4. Smoothly route to target portal
+      // 4. Route to target portal
       const targetUrl = isOwner ? '/owner' : `/operator?branch=${branch === 'branch-beta' ? 'beta' : 'alpha'}`;
       window.location.href = targetUrl;
     } catch (err: unknown) {
@@ -107,20 +112,23 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fff1f4] relative flex items-center justify-center p-3 sm:p-6 lg:p-10 overflow-hidden font-['Nunito_Variable',sans-serif] text-[#2b1233]">
-      {/* Decorative Pastel Background Blobs matching SS1 */}
-      <div className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#fddbe3]/60 blur-3xl -z-10" />
-      <div className="pointer-events-none absolute -bottom-32 -right-32 w-[520px] h-[520px] rounded-full bg-[#fecdd6]/50 blur-3xl -z-10" />
-      <div className="pointer-events-none absolute top-1/2 left-10 -translate-y-1/2 w-80 h-80 rounded-full bg-[#ffe4ec]/60 blur-2xl -z-10" />
-
-      {/* Main Split Container Card (SS1) */}
-      <div className="relative w-full max-w-[1140px] bg-white/95 backdrop-blur-xl border border-[#f4d3dd] rounded-[36px] md:rounded-[44px] shadow-[0_28px_85px_-20px_rgba(120,20,60,0.22)] overflow-hidden grid grid-cols-1 lg:grid-cols-[1.14fr_0.86fr] min-h-[590px]">
+    <div
+      className="min-h-screen relative flex items-center justify-center p-3 sm:p-6 lg:p-10 font-['Nunito_Variable',sans-serif] text-[#2b1233] bg-[#fff1f4] bg-cover bg-center overflow-x-hidden"
+      style={{
+        backgroundImage: "url('/images/login/login-bg.png')",
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+      }}
+    >
+      {/* Main Split Container Card matching SS5 */}
+      <div className="relative w-full max-w-[1140px] bg-gradient-to-br from-[#fff7f9]/95 via-[#fef2f5]/95 to-[#fdeef2]/95 backdrop-blur-xl border border-[#f7cfd8] rounded-[36px] md:rounded-[44px] shadow-[0_30px_90px_-20px_rgba(180,40,80,0.2)] overflow-hidden grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] min-h-[590px]">
         {/* ========================================================================= */}
-        {/* Left Column: Brand Showcase, Heading, Stats & Cone Hero (SS1)             */}
+        {/* Left Column: Brand, Heading, Live Badge, Stats & Hero Cone (SS5)          */}
         {/* ========================================================================= */}
-        <div className="p-7 sm:p-9 md:p-11 flex flex-col justify-between relative bg-gradient-to-br from-[#fff7f9] via-[#fef2f5] to-[#fdeef2] overflow-hidden">
+        <div className="p-7 sm:p-9 md:p-12 flex flex-col justify-between relative overflow-hidden">
           {/* Top Brand Link Row */}
-          <div className="flex items-center gap-3 relative z-20">
+          <div className="flex items-center gap-3 relative z-30">
             <Link
               href="/"
               className="group inline-flex items-center gap-2 text-[15px] font-bold text-[#2b1233] transition-colors"
@@ -140,12 +148,19 @@ export default function AdminLoginPage() {
             </Link>
           </div>
 
-          {/* Middle Content: Heading, Subtext, Live Badge & Stats */}
-          <div className="mt-8 mb-6 relative z-20 max-w-[360px]">
+          {/* Middle Left Content */}
+          <div className="mt-8 mb-6 relative z-30 max-w-[340px]">
+            {/* Hand-drawn dynamic burst lines above top scoop */}
+            <div className="absolute -top-6 right-[-80px] hidden md:flex gap-1 select-none pointer-events-none text-[#d61c5d]/80 text-xl font-bold rotate-12">
+              <span>\</span>
+              <span>\</span>
+              <span>\</span>
+            </div>
+
             {/* Display Heading with Caveat Script word "scoops" */}
-            <h1 className="font-['Fredoka_Variable',sans-serif] text-[clamp(42px,4.4vw,64px)] font-black text-[#2b1233] leading-[1.04] tracking-tight">
+            <h1 className="font-['Fredoka_Variable',sans-serif] text-[clamp(42px,4.5vw,66px)] font-black text-[#2b1233] leading-[1.04] tracking-tight">
               Keep the <br />
-              <span className="font-['Caveat_Variable',cursive] text-[#d61c5d] text-[1.2em] font-normal italic inline-block -rotate-2 transform">
+              <span className="font-['Caveat_Variable',cursive] text-[#d61c5d] text-[1.22em] font-normal italic inline-block -rotate-2 transform">
                 scoops
               </span>{' '}
               <br />
@@ -166,8 +181,13 @@ export default function AdminLoginPage() {
               <span>Live operations</span>
             </div>
 
+            {/* Pink squiggly accent above stats */}
+            <div className="mt-3 text-[#d61c5d] text-lg font-bold select-none pointer-events-none">
+              ~
+            </div>
+
             {/* Stats Capsule Card */}
-            <div className="mt-3.5 flex items-center gap-4 sm:gap-5 bg-white/95 border border-[#f4d3dd] rounded-2xl p-3 px-4 shadow-[0_8px_20px_-8px_rgba(120,20,60,0.12)] w-max">
+            <div className="mt-1 flex items-center gap-4 sm:gap-5 bg-white/95 border border-[#f4d3dd] rounded-2xl p-3 px-4 shadow-[0_8px_22px_-8px_rgba(120,20,60,0.12)] w-max">
               <div className="flex items-center gap-2.5">
                 <span className="w-8 h-8 rounded-full bg-[#fff1f4] flex items-center justify-center text-sm">🛒</span>
                 <div>
@@ -205,7 +225,7 @@ export default function AdminLoginPage() {
               </div>
             </div>
 
-            {/* Handwritten Note & Arrow */}
+            {/* Handwritten Note & Arrow pointing to Cone */}
             <div className="mt-5 flex items-center gap-2">
               <span className="font-['Caveat_Variable',cursive] text-[18px] font-semibold text-[#2b1233] italic">
                 Good ice-cream runs on great people.
@@ -224,43 +244,35 @@ export default function AdminLoginPage() {
             </div>
           </div>
 
-          {/* Cone Hero Illustration with Pink Backdrop Blob & Floating Toppings (SS1) */}
-          <div className="hidden md:block absolute -right-2 bottom-[-15px] lg:right-4 lg:bottom-[-20px] w-[270px] lg:w-[325px] pointer-events-none select-none z-10">
-            {/* Soft pink organic circular blob behind cone */}
-            <div className="absolute top-[48%] right-2 -translate-y-1/2 w-[240px] h-[240px] rounded-full bg-[#fecdd6]/75 blur-md -z-10" />
-
-            {/* Triple scoop waffle cone */}
+          {/* Ice Cream Cone Hero Composite Image (SS5 asset: login-cone-hero.png) */}
+          <div className="hidden md:block absolute -right-8 bottom-[-15px] lg:right-[-35px] lg:bottom-[-20px] w-[340px] lg:w-[410px] pointer-events-none select-none z-20">
             <img
-              src="/images/melt/cone-hero.webp"
-              alt="Melt Triple Scoop Cone"
-              className="w-full h-auto drop-shadow-[0_22px_38px_rgba(120,20,60,0.28)]"
-            />
-
-            {/* Floating Toppings around cone */}
-            <img
-              src="/images/melt/topping-strawberry.webp"
-              alt="Strawberry"
-              className="absolute top-[40%] right-[6%] w-11 h-auto -rotate-12 drop-shadow-md"
-            />
-            <img
-              src="/images/melt/topping-chocolate.webp"
-              alt="Chocolate"
-              className="absolute bottom-[42%] left-[2%] w-10 h-auto rotate-12 drop-shadow-md"
-            />
-            <img
-              src="/images/melt/topping-pistachio.webp"
-              alt="Pistachio"
-              className="absolute top-[16%] right-[20%] w-8 h-auto rotate-45 drop-shadow-sm"
+              src="/images/login/login-cone-hero.png"
+              alt="Melt Triple Scoop Cone with Toppings"
+              className="w-full h-auto drop-shadow-[0_24px_45px_rgba(140,20,60,0.25)]"
             />
           </div>
         </div>
 
         {/* ========================================================================= */}
-        {/* Right Column: Crisp White Portal Login Card (SS1)                         */}
+        {/* Right Column: Crisp White Portal Login Card (SS5 asset: login-card-shape) */}
         {/* ========================================================================= */}
-        <div className="bg-white rounded-[32px] md:rounded-[40px] p-6 sm:p-8 md:p-10 m-2 sm:m-3.5 shadow-[0_18px_45px_-12px_rgba(120,20,60,0.14)] border border-[#f4d3dd]/80 flex flex-col justify-center relative z-20">
-          {/* Card Header: Brand Icon, Title & Subtitle */}
-          <div className="text-center mb-6">
+        <div className="relative flex flex-col justify-center p-6 sm:p-9 md:p-12 z-30">
+          {/* Card background with organic wavy left edge (SS5 asset: login-card-shape.png) */}
+          <div
+            className="absolute inset-0 w-full h-full pointer-events-none select-none -z-10 hidden sm:block"
+            style={{
+              backgroundImage: "url('/images/login/login-card-shape.png')",
+              backgroundSize: '100% 100%',
+              backgroundRepeat: 'no-repeat',
+              filter: 'drop-shadow(0 20px 45px rgba(120, 20, 60, 0.12))',
+            }}
+          />
+          {/* Fallback solid white card background for small mobile screens */}
+          <div className="absolute inset-0 w-full h-full bg-white rounded-3xl border border-[#f4d3dd] sm:hidden -z-20" />
+
+          {/* Card Content Header */}
+          <div className="text-center mb-6 pl-0 sm:pl-3">
             <div className="inline-flex items-center justify-center gap-1.5 text-[#d61c5d] font-['Fredoka_Variable',sans-serif] text-base font-bold">
               <span>🍦</span>
               <span>Melt Theory</span>
@@ -281,14 +293,14 @@ export default function AdminLoginPage() {
           </div>
 
           {/* Portal Switcher Tabs (Owner Portal vs Operator Desk) */}
-          <div className="grid grid-cols-2 bg-[#fff1f4] p-1.5 rounded-2xl gap-1.5 mb-5 border border-[#f4d3dd]/60">
+          <div className="grid grid-cols-2 bg-[#fff1f4] p-1.5 rounded-2xl gap-1.5 mb-5 border border-[#f4d3dd]/60 pl-0 sm:pl-3">
             <button
               type="button"
               onClick={() => {
                 setSelectedRole('owner');
                 setError(null);
               }}
-              className={`py-2.5 px-3 rounded-xl text-xs sm:text-[13px] font-extrabold transition-all flex items-center justify-center gap-1.5 ${
+              className={`py-2.5 px-3 rounded-xl text-xs sm:text-[13px] font-extrabold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 selectedRole === 'owner'
                   ? 'bg-white text-[#d61c5d] shadow-[0_4px_12px_rgba(120,20,60,0.12)]'
                   : 'text-[#6f5569] hover:text-[#2b1233]'
@@ -303,7 +315,7 @@ export default function AdminLoginPage() {
                 setSelectedRole('operator');
                 setError(null);
               }}
-              className={`py-2.5 px-3 rounded-xl text-xs sm:text-[13px] font-extrabold transition-all flex items-center justify-center gap-1.5 ${
+              className={`py-2.5 px-3 rounded-xl text-xs sm:text-[13px] font-extrabold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 selectedRole === 'operator'
                   ? 'bg-white text-[#d61c5d] shadow-[0_4px_12px_rgba(120,20,60,0.12)]'
                   : 'text-[#6f5569] hover:text-[#2b1233]'
@@ -315,8 +327,8 @@ export default function AdminLoginPage() {
           </div>
 
           {/* Authentication Form */}
-          <form onSubmit={handleLogin} className="space-y-4">
-            {/* Operator Branch Selector */}
+          <form onSubmit={handleLogin} className="space-y-4 pl-0 sm:pl-3">
+            {/* Operator Branch Selector (shown only when Operator Desk is active) */}
             {selectedRole === 'operator' && (
               <div className="text-left">
                 <label className="block text-xs font-bold text-[#2b1233] mb-1.5">
@@ -342,14 +354,14 @@ export default function AdminLoginPage() {
                 <button
                   type="button"
                   onClick={() => setPin('123456')}
-                  className="text-xs font-bold text-[#d61c5d] hover:underline"
+                  className="text-xs font-bold text-[#d61c5d] hover:underline cursor-pointer"
                   title="Click to fill default PIN"
                 >
                   Default PIN: 123456
                 </button>
               </div>
 
-              {/* Password Input with Lock Icon inside */}
+              {/* Password Input with Golden Lock Icon inside */}
               <div className="relative">
                 <input
                   type={showPin ? 'text' : 'password'}
@@ -362,7 +374,7 @@ export default function AdminLoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPin(!showPin)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-lg text-[#8c6b79] hover:text-[#2b1233] transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-lg text-[#8c6b79] hover:text-[#2b1233] transition-colors cursor-pointer"
                   title={showPin ? 'Hide PIN' : 'Show PIN'}
                 >
                   {showPin ? '👁️' : '🔒'}
@@ -392,14 +404,14 @@ export default function AdminLoginPage() {
           </form>
 
           {/* Footer Security Badge */}
-          <div className="mt-5 text-center flex items-center justify-center gap-1.5 text-[11.5px] font-semibold text-[#8c6b79]">
+          <div className="mt-5 text-center flex items-center justify-center gap-1.5 text-[11.5px] font-semibold text-[#8c6b79] pl-0 sm:pl-3">
             <span>🛡️</span>
             <span>Secure access • Authorized staff only</span>
           </div>
 
           {/* Quick shortcuts if already logged in */}
           {isLoggedIn && (
-            <div className="mt-5 pt-4 border-t border-[#f4d3dd] text-center">
+            <div className="mt-5 pt-4 border-t border-[#f4d3dd] text-center pl-0 sm:pl-3">
               <div className="flex items-center justify-center gap-2 flex-wrap">
                 <Link
                   href="/owner"
@@ -416,7 +428,7 @@ export default function AdminLoginPage() {
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="text-xs font-bold px-3 py-1.5 rounded-full bg-white text-rose-600 border border-rose-200 hover:bg-rose-50 transition-colors"
+                  className="text-xs font-bold px-3 py-1.5 rounded-full bg-white text-rose-600 border border-rose-200 hover:bg-rose-50 transition-colors cursor-pointer"
                 >
                   Sign Out
                 </button>
