@@ -25,7 +25,16 @@ export async function handleHealthRoute(
   };
 
   try {
-    const isDbBound = Boolean(env?.DB);
+    let isDbBound = Boolean(env?.DB);
+    if (!isDbBound) {
+      try {
+        const { getDatabase } = await import('../../database/runtime');
+        const db = getDatabase(env ? { env } : undefined);
+        isDbBound = Boolean(db);
+      } catch {
+        isDbBound = false;
+      }
+    }
     const health = HealthController.getHealth(isDbBound);
     return successResponse(health, 200, responseHeaders);
   } catch (error) {

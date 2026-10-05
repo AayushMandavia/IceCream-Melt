@@ -4,3 +4,4 @@ functions/
 archive/
 scripts/
 tests/
+!database/seed.db

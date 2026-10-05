@@ -24,6 +24,7 @@ next-env.d.ts
 *.sqlite3
 *.sqlite-journal
 *.db
+!database/seed.db
 
 # testing & cloudflare
 coverage/
