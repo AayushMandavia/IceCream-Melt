@@ -47,12 +47,17 @@ export function middleware(request: NextRequest) {
   let rawSubdomain = '';
   if (hostWithoutPort.endsWith('localhost') && parts.length > 1) {
     rawSubdomain = parts[0];
+  } else if (hostWithoutPort.endsWith('.vercel.app')) {
+    // Vercel deployment root domains (e.g. icecream-melt.vercel.app or melt.vercel.app)
+    if (parts.length > 3) {
+      rawSubdomain = parts[0];
+    }
   } else if (parts.length > 2) {
     rawSubdomain = parts[0];
   }
 
-  // Ignore 'www'
-  if (rawSubdomain === 'www') {
+  // Ignore 'www' and known project domain prefixes
+  if (rawSubdomain === 'www' || rawSubdomain === 'melt' || rawSubdomain === 'icecream-melt') {
     rawSubdomain = '';
   }
 
