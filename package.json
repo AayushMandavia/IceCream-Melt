@@ -1,13 +1,19 @@
 {
-  "name": "showreel-kit",
+  "name": "inventory-ordermanagement",
   "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "frames": "node scripts/video-to-frames.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "npx tsx scripts/run-tests.ts",
+    "lint": "eslint .",
     "check": "node scripts/check-site.mjs",
+    "frames": "node scripts/video-to-frames.mjs",
+    "db:migrate": "npx tsx scripts/migrate.ts",
+    "db:seed": "npx tsx scripts/seed.ts",
+    "seed": "npx tsx scripts/seed.ts",
     "archive": "node scripts/archive.mjs archive",
     "restore": "node scripts/archive.mjs restore"
   },
@@ -23,19 +29,27 @@
     "@fontsource-variable/syne": "^5.3.0",
     "@fontsource/anton": "^5.3.0",
     "@fontsource/cormorant-garamond": "^5.3.0",
+    "firebase": "^12.19.0",
     "gsap": "^3.15.0",
     "lenis": "^1.3.26",
     "next": "16.3.6",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^10.11.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "ffmpeg-static": "^5.3.0",
     "tailwindcss": "^4.3.3",
-    "typescript": "^5"
+    "tsx": "^4.23.15",
+    "typescript": "^5",
+    "typescript-eslint": "^8.71.0",
+    "wrangler": "^4.146.0"
   }
 }

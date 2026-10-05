@@ -34,10 +34,22 @@ export default function SmoothScroll() {
     const onClick = (e: MouseEvent) => {
       const a = (e.target as HTMLElement).closest("a[href^='#']") as HTMLAnchorElement | null;
       if (!a) return;
-      const target = document.querySelector(a.getAttribute("href") || "");
-      if (target) {
-        e.preventDefault();
-        lenis.scrollTo(target as HTMLElement, { duration: 1.6 });
+      const href = a.getAttribute("href");
+      if (!href || href === "#" || href === "#top") {
+        if (href === "#top") {
+          e.preventDefault();
+          lenis.scrollTo(0, { duration: 1.6 });
+        }
+        return;
+      }
+      try {
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          lenis.scrollTo(target as HTMLElement, { duration: 1.6 });
+        }
+      } catch {
+        // Ignore invalid query selectors
       }
     };
     document.addEventListener("click", onClick);

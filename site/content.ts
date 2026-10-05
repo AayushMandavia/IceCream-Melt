@@ -94,7 +94,7 @@ export const builder = {
 export const slow = {
   eyebrow: "How it's made",
   heading: ["Made the", "*slow* way"],
-  text: "No premix, no powder. Milk comes in at 6 AM and the first batch is on the counter by noon.",
+  text: "Crafted fresh daily with pure dairy, real fruits, and zero shortcuts. Churned in small batches every morning.",
   frames: "/frames/melt-pour",
   alt: "Warm chocolate poured over a vanilla scoop, topped with pistachios",
   panel: "linear-gradient(180deg, #e2c4c6, #ebd7dd)", // the video's own background, so the panel and the video blend
@@ -105,11 +105,11 @@ export const slow = {
     [0.66, 0.57],
     [1, 0.52],
   ] as [number, number][],
-  // stickers stay on the pink left side (desktop) / in a row above the video (phone), never over the scoop
+  // stickers stay on the pink left side, neatly arranged below the text
   captions: [
-    { title: "Fresh milk", text: "every single morning", at: 0.1, pos: "md:left-[4%] md:bottom-[24%]", fill: "#ffffff" },
-    { title: "40 minutes", text: "of slow churning", at: 0.35, pos: "md:left-[13%] md:bottom-[6%]", fill: FLAVOUR.mango },
-    { title: "20 litres", text: "max per batch", at: 0.6, pos: "md:left-[21%] md:bottom-[33%]", fill: FLAVOUR.pistachio },
+    { title: "Fresh milk", text: "every single morning", at: 0.1, fill: "#ffffff" },
+    { title: "40 minutes", text: "of slow churning", at: 0.35, fill: FLAVOUR.mango },
+    { title: "20 litres", text: "max per batch", at: 0.6, fill: FLAVOUR.pistachio },
   ],
 };
 
