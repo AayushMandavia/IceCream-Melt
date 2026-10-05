@@ -168,8 +168,9 @@ export default function AdminLoginPage() {
             </h1>
 
             {/* Subtext */}
-            <p className="mt-3.5 text-[15.5px] font-semibold text-[#6f5569] leading-snug">
-              Staff access for orders, inventory &amp; parlours.
+            <p className="mt-3 text-[15px] font-semibold text-[#6f5569] leading-snug max-w-[270px]">
+              Staff access for orders, <br />
+              inventory &amp; parlours.
             </p>
 
             {/* Live Operations Row */}
