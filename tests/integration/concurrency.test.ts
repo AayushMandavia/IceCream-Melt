@@ -17,7 +17,7 @@ import { OrderStatus, PaymentStatus, PaymentMethod } from '../../shared/enums/or
 import { BranchStatus } from '../../shared/enums/branch.enum';
 import { UserRole, MembershipStatus } from '../../shared/enums/roles.enum';
 import { D1DatabaseLike } from '../../database/types';
-import { handleRealtimeTicketRoute, handleRealtimeEventsRoute } from '../../api/routes/realtime.route';
+import { handleRealtimeTicketRoute, handleRealtimeEventsRoute } from '../../server-api/routes/realtime.route';
 
 describe('Phase 3 — Concurrency, Payment Lifecycle & Ticket Transport Tests', () => {
   let db: D1DatabaseLike;

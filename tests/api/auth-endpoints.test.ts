@@ -16,9 +16,9 @@ import {
   handleVerifyPin,
   handleRevokeSession,
   handleRevokeAllSessions,
-} from '../../api/routes/auth.route';
-import { handleBranchOrdersRoute } from '../../api/routes/branch-orders.route';
-import { handleCustomerOrdersRoute } from '../../api/routes/customer-orders.route';
+} from '../../server-api/routes/auth.route';
+import { handleBranchOrdersRoute } from '../../server-api/routes/branch-orders.route';
+import { handleCustomerOrdersRoute } from '../../server-api/routes/customer-orders.route';
 import { hashPin } from '../../backend/services/auth/pin-hasher';
 import { D1DatabaseLike } from '../../database/types';
 

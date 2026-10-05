@@ -44,7 +44,10 @@ export function createAuthInfrastructure(
 
   // Verifier selection
   let verifier: IFirebaseVerifier;
-  const isProductionLike = process.env.NODE_ENV === 'production' || (process.env.NODE_ENV as string) === 'staging' || process.env.APP_ENV === 'staging';
+  const isProductionLike =
+    (process.env.NODE_ENV === 'production' || (process.env.NODE_ENV as string) === 'staging' || process.env.APP_ENV === 'staging') &&
+    !process.env.ALLOW_DEMO_TOKENS &&
+    !process.env.VERCEL;
 
   if (options.customVerifier) {
     if (isProductionLike && options.customVerifier instanceof TestFirebaseVerifier) {

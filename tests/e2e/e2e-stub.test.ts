@@ -6,7 +6,7 @@ import { runMigrations } from '../../database/migrations/runner';
 import { runDevSeed } from '../../database/seeds/dev-seed';
 import { BranchRepository } from '../../database/repositories/branch.repository';
 import { ProductRepository } from '../../database/repositories/product.repository';
-import { buildSuccessEnvelope } from '../../api/serializers/response';
+import { buildSuccessEnvelope } from '../../server-api/serializers/response';
 
 describe('End-to-End Foundation Integration', () => {
   it('runs complete lifecycle: migration -> seed -> repository -> serialized API response', async () => {

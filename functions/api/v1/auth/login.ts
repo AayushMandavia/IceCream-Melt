@@ -1,4 +1,4 @@
-import { handleAuthLogin } from '../../../../api/routes/auth.route';
+import { handleAuthLogin } from '../../../../server-api/routes/auth.route';
 import { CloudflareEnv } from '../../../../database/types';
 
 interface PagesFunctionEventContext<Env> {

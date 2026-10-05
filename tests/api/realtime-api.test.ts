@@ -5,15 +5,15 @@ import assert from 'node:assert/strict';
 import { createMemoryD1Database } from '../../database/adapter.sqlite';
 import { runMigrations } from '../../database/migrations/runner';
 import { runDevSeed } from '../../database/seeds/dev-seed';
-import { handleRealtimeEventsRoute } from '../../api/routes/realtime.route';
-import { handleSetPin, handleVerifyPin } from '../../api/routes/auth.route';
+import { handleRealtimeEventsRoute } from '../../server-api/routes/realtime.route';
+import { handleSetPin, handleVerifyPin } from '../../server-api/routes/auth.route';
 import { OrderRepository } from '../../database/repositories/order.repository';
 import { UserRepository } from '../../database/repositories/user.repository';
 import { realtimeService } from '../../backend/services/realtime';
 import { D1DatabaseLike } from '../../database/types';
 import { OrderStatus, PaymentStatus } from '../../shared/enums/order.enum';
 import { UserRole, MembershipStatus } from '../../shared/enums/roles.enum';
-import { resetRateLimits } from '../../api/middleware/rate-limiter';
+import { resetRateLimits } from '../../server-api/middleware/rate-limiter';
 
 const CUSTOMER_ID = 'usr-cust-rt';
 const OTHER_CUSTOMER_ID = 'usr-other-rt';

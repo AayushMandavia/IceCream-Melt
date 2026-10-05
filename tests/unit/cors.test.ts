@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { isOriginAllowed, getCorsHeaders, handleCorsPreflight } from '../../api/middleware/cors';
+import { isOriginAllowed, getCorsHeaders, handleCorsPreflight } from '../../server-api/middleware/cors';
 
 describe('CORS & Request Middleware', () => {
   const allowedOrigins = ['https://melt.example.com', 'https://admin.melt.example.com'];

@@ -1,4 +1,4 @@
-import { handleBranchOrdersRoute } from '../../../../../api/routes/branch-orders.route';
+import { handleBranchOrdersRoute } from '../../../../../server-api/routes/branch-orders.route';
 import { CloudflareEnv } from '../../../../../database/types';
 
 interface PagesFunctionEventContext<Env> {

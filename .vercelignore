@@ -1,0 +1,6 @@
+functions/
+.data/
+*.sqlite
+archive/
+scripts/
+tests/

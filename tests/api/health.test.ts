@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { handleHealthRoute } from '../../api/routes/health.route';
-import { handleApiError } from '../../api/middleware/error-handler';
+import { handleHealthRoute } from '../../server-api/routes/health.route';
+import { handleApiError } from '../../server-api/middleware/error-handler';
 import { NotFoundError, ValidationError } from '../../backend/errors/app-error';
 import { ApiErrorCode } from '../../shared/enums/errors.enum';
 import { HTTP_STATUS } from '../../shared/constants/api.constants';
@@ -127,8 +127,8 @@ describe('API Foundation & Health Check', () => {
     assert.strictEqual(json.data.database, 'connected');
   });
 
-  it('proves Next.js route handler app/api/v1/health/route.ts executes correctly', async () => {
-    const { GET } = await import('../../app/api/v1/health/route');
+  it('proves Next.js route handler app/api/[...slug]/route.ts executes correctly', async () => {
+    const { GET } = await import('../../app/api/[...slug]/route');
     const request = new Request('http://localhost:3000/api/v1/health', {
       method: 'GET',
     });

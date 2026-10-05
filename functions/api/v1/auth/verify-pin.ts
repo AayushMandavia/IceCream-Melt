@@ -1,4 +1,4 @@
-import { handleVerifyPin } from '../../../../api/routes/auth.route';
+import { handleVerifyPin } from '../../../../server-api/routes/auth.route';
 import { CloudflareEnv } from '../../../../database/types';
 
 interface PagesFunctionEventContext<Env> {

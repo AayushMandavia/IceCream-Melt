@@ -15,8 +15,8 @@ import { UserRepository } from '../../database/repositories/user.repository';
 import { BranchRepository } from '../../database/repositories/branch.repository';
 import { UserRole, MembershipStatus } from '../../shared/enums/roles.enum';
 import { PaymentMethod, OrderStatus, PaymentStatus } from '../../shared/enums/order.enum';
-import { handleSetPin, handleVerifyPin } from '../../api/routes/auth.route';
-import { resetRateLimits } from '../../api/middleware/rate-limiter';
+import { handleSetPin, handleVerifyPin } from '../../server-api/routes/auth.route';
+import { resetRateLimits } from '../../server-api/middleware/rate-limiter';
 import {
   handleBranchOrdersRoute,
   handleBranchOrderStatusRoute,
@@ -24,13 +24,13 @@ import {
   handleBranchOrderEditRoute,
   handleRecordPaymentRoute,
   handleVerifyPaymentRoute,
-} from '../../api/routes/branch-orders.route';
+} from '../../server-api/routes/branch-orders.route';
 import {
   handleCustomerOrdersRoute,
   handleCreateOrderRoute,
   handleEditOrderRoute,
-} from '../../api/routes/customer-orders.route';
-import { handleBranchCatalogRoute } from '../../api/routes/catalog.route';
+} from '../../server-api/routes/customer-orders.route';
+import { handleBranchCatalogRoute } from '../../server-api/routes/catalog.route';
 import { D1DatabaseLike } from '../../database/types';
 
 function bearerToken(uid: string, email: string, name: string): string {

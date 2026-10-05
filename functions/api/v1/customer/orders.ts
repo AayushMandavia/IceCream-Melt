@@ -1,4 +1,4 @@
-import { handleCustomerOrdersRoute } from '../../../../api/routes/customer-orders.route';
+import { handleCustomerOrdersRoute } from '../../../../server-api/routes/customer-orders.route';
 import { CloudflareEnv } from '../../../../database/types';
 
 interface PagesFunctionEventContext<Env> {

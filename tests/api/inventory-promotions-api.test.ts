@@ -8,8 +8,8 @@ import { runMigrations } from '../../database/migrations/runner';
 import { UserRepository } from '../../database/repositories/user.repository';
 import { BranchRepository } from '../../database/repositories/branch.repository';
 import { UserRole, MembershipStatus } from '../../shared/enums/roles.enum';
-import { handleSetPin, handleVerifyPin } from '../../api/routes/auth.route';
-import { resetRateLimits } from '../../api/middleware/rate-limiter';
+import { handleSetPin, handleVerifyPin } from '../../server-api/routes/auth.route';
+import { resetRateLimits } from '../../server-api/middleware/rate-limiter';
 import {
   handleGetInventoryRoute,
   handleRefillInventoryRoute,
@@ -17,12 +17,12 @@ import {
   handleGetMovementsRoute,
   handleProductBOMRoute,
   handleUpdateInventoryPricingRoute,
-} from '../../api/routes/inventory.route';
+} from '../../server-api/routes/inventory.route';
 import {
   handleBranchOffersRoute,
   handleBranchCouponsRoute,
   handleValidateCouponRoute,
-} from '../../api/routes/promotions.route';
+} from '../../server-api/routes/promotions.route';
 import { D1DatabaseLike } from '../../database/types';
 
 function bearerToken(uid: string, email: string, name: string): string {

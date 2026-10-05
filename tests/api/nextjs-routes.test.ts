@@ -10,25 +10,36 @@ import { ProductRepository } from '../../database/repositories/product.repositor
 import { UserRole, MembershipStatus } from '../../shared/enums/roles.enum';
 import { BranchStatus } from '../../shared/enums/branch.enum';
 import { PaymentMethod, OrderStatus } from '../../shared/enums/order.enum';
-import { handleSetPin, handleVerifyPin } from '../../api/routes/auth.route';
+import { handleSetPin, handleVerifyPin } from '../../server-api/routes/auth.route';
 import { D1DatabaseLike, CloudflareEnv } from '../../database/types';
 
-// Import actual Next.js route handlers
-import * as CatalogRoute from '../../app/api/v1/branches/[id]/catalog/route';
-import * as CustomerOrdersRoute from '../../app/api/v1/customer/orders/route';
-import * as CustomerOrderDetailRoute from '../../app/api/v1/customer/orders/[orderId]/route';
-import * as BranchOrdersRoute from '../../app/api/v1/branches/[id]/orders/route';
-import * as BranchOrderDetailRoute from '../../app/api/v1/branches/[id]/orders/[orderId]/route';
-import * as BranchOrderStatusRoute from '../../app/api/v1/branches/[id]/orders/[orderId]/status/route';
-import * as RecordPaymentRoute from '../../app/api/v1/branches/[id]/orders/[orderId]/payments/route';
-import * as VerifyPaymentRoute from '../../app/api/v1/branches/[id]/orders/[orderId]/payments/[paymentId]/verify/route';
-import * as ConfirmOrderRoute from '../../app/api/v1/branches/[id]/orders/[orderId]/confirm/route';
-import * as RealtimeEventsRoute from '../../app/api/v1/realtime/events/route';
-import * as CronExpireRoute from '../../app/api/v1/cron/expire-orders/route';
-import * as OwnerMarketingCustomersRoute from '../../app/api/v1/owner/marketing/customers/route';
-import * as OwnerMarketingBroadcastRoute from '../../app/api/v1/owner/marketing/broadcast/route';
-import * as OwnerReportsRoute from '../../app/api/v1/owner/reports/route';
-import * as CustomerCouponsRoute from '../../app/api/v1/customer/coupons/route';
+// Import unified Next.js route dispatcher
+import { dispatchApiRequest } from '../../server-api/dispatcher';
+
+const CatalogRoute = { GET: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req) };
+const CustomerOrdersRoute = {
+  GET: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req),
+  POST: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req),
+};
+const CustomerOrderDetailRoute = { GET: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req) };
+const BranchOrdersRoute = {
+  GET: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req),
+  POST: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req),
+};
+const BranchOrderDetailRoute = {
+  GET: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req),
+  PATCH: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req),
+};
+const BranchOrderStatusRoute = { PATCH: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req) };
+const RecordPaymentRoute = { POST: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req) };
+const VerifyPaymentRoute = { POST: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req) };
+const ConfirmOrderRoute = { POST: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req) };
+const RealtimeEventsRoute = { GET: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req) };
+const CronExpireRoute = { POST: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req) };
+const OwnerMarketingCustomersRoute = { GET: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req) };
+const OwnerMarketingBroadcastRoute = { POST: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req) };
+const OwnerReportsRoute = { GET: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req) };
+const CustomerCouponsRoute = { GET: (req: Request, ..._rest: unknown[]) => dispatchApiRequest(req) };
 
 function bearerToken(uid: string, email: string, name: string): string {
   return `Bearer mock-user:${uid}:${email}:${name}`;

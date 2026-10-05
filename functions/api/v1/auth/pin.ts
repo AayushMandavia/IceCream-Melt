@@ -1,4 +1,4 @@
-import { handleSetPin } from '../../../../api/routes/auth.route';
+import { handleSetPin } from '../../../../server-api/routes/auth.route';
 import { CloudflareEnv } from '../../../../database/types';
 
 interface PagesFunctionEventContext<Env> {

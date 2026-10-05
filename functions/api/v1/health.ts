@@ -1,4 +1,4 @@
-import { handleHealthRoute } from '../../../api/routes/health.route';
+import { handleHealthRoute } from '../../../server-api/routes/health.route';
 import { CloudflareEnv } from '../../../database/types';
 
 interface PagesFunctionEventContext<Env> {
