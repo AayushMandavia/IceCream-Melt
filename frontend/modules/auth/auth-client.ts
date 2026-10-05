@@ -62,10 +62,14 @@ export class AuthClient {
     return (await getCurrentFirebaseIdToken()) ?? this.getDevIdToken();
   }
 
+  clearSession(): void {
+    this.setSessionToken(null);
+  }
+
   /**
    * Centralized helper to build authorized headers with a fresh Firebase ID token
    * and optional application session token.
-   * On localhost dev, automatically resolves appropriate demo credentials.
+   * On localhost and Vercel preview, automatically resolves appropriate demo credentials.
    */
   async getAuthorizedHeaders(options: { requireSession?: boolean } = {}): Promise<Record<string, string>> {
     let idToken = await getCurrentFirebaseIdToken();
@@ -73,11 +77,12 @@ export class AuthClient {
       idToken = this.getDevIdToken();
     }
 
-    // Auto-fallback in local development mode with subdomain awareness
+    // Auto-fallback in dev or preview mode with subdomain/path awareness
     if (!idToken && typeof window !== 'undefined') {
       const host = window.location.hostname.toLowerCase();
       const isLocalHost = host === 'localhost' || host === '127.0.0.1' || host.endsWith('.localhost');
-      if (isLocalHost) {
+      const isPreviewOrDev = isLocalHost || host.includes('vercel.app');
+      if (isPreviewOrDev) {
         const isOwnerContext =
           host.startsWith('owner.') ||
           host.startsWith('admin.') ||
@@ -97,7 +102,7 @@ export class AuthClient {
         if (isOwnerContext) {
           idToken = 'mock-user:fb-owner-master:owner@melt.example.com:Stavan Sheth (Owner)';
         } else if (isOperatorContext) {
-          if (host.includes('beta')) {
+          if (host.includes('beta') || window.location.search.includes('beta')) {
             idToken = 'mock-user:fb-op-beta:operator.beta@melt.example.com:Anita Desai (Beta Lead)';
           } else {
             idToken = 'mock-user:fb-op-alpha:operator.alpha@melt.example.com:Raj Patel (Alpha Lead)';
@@ -120,20 +125,22 @@ export class AuthClient {
 
     let sessionToken = this.getSessionToken();
 
-    // Auto-verify PIN in localhost dev if session is required but not yet established
+    // Auto-verify PIN in dev/preview if session is required but not yet established
     if (options.requireSession && !sessionToken && typeof window !== 'undefined') {
       const host = window.location.hostname.toLowerCase();
       const isLocalHost = host === 'localhost' || host === '127.0.0.1' || host.endsWith('.localhost');
-      if (isLocalHost) {
+      const isPreviewOrDev = isLocalHost || host.includes('vercel.app');
+      if (isPreviewOrDev) {
         try {
           const isOwner =
             host.startsWith('owner.') ||
             host.startsWith('admin.') ||
             window.location.pathname.startsWith('/owner');
+          const isBeta = host.includes('beta') || window.location.search.includes('beta');
           const verifyPayload: VerifyPinRequest = {
             pin: '123456',
             scope: isOwner ? 'GLOBAL' : 'BRANCH',
-            branchId: isOwner ? undefined : 'branch-alpha',
+            branchId: isOwner ? undefined : isBeta ? 'branch-beta' : 'branch-alpha',
           };
           const res = await fetch(`${this.baseUrl}${API_V1_PREFIX}/auth/verify-pin`, {
             method: 'POST',
@@ -154,12 +161,11 @@ export class AuthClient {
       }
     }
 
+    // Only attach x-session-token when specifically required by the operation
     if (options.requireSession) {
       if (!sessionToken) {
         throw new Error('Application PIN session is required');
       }
-      headers['x-session-token'] = sessionToken;
-    } else if (sessionToken) {
       headers['x-session-token'] = sessionToken;
     }
 
@@ -226,12 +232,6 @@ export class AuthClient {
     return json.data;
   }
 
-  /**
-   * Clears the stored session token.
-   */
-  clearSession(): void {
-    this.activeSessionToken = null;
-  }
 
   /**
    * Revokes an application session.

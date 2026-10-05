@@ -65,26 +65,31 @@ export class AuthMiddleware {
       try {
         const session = await this.deps.sessionService.validateSession(sessionToken);
         if (session.user_id !== userContext.userId) {
-          throw new ForbiddenError('Application session does not belong to the authenticated user');
-        }
+          if (options.requireSession) {
+            throw new ForbiddenError('Application session does not belong to the authenticated user');
+          }
+        } else {
+          userContext.session = {
+            id: session.id,
+            user_id: session.user_id,
+            scope: session.scope,
+            branchId: session.branch_id,
+            pinVerified: Boolean(session.pin_verified_at),
+            expiresAt: session.expires_at,
+          };
 
-        userContext.session = {
-          id: session.id,
-          user_id: session.user_id,
-          scope: session.scope,
-          branchId: session.branch_id,
-          pinVerified: Boolean(session.pin_verified_at),
-          expiresAt: session.expires_at,
-        };
-
-        if (session.branch_id) {
-          userContext.activeBranchId = session.branch_id;
+          if (session.branch_id) {
+            userContext.activeBranchId = session.branch_id;
+          }
         }
       } catch (err) {
-        if (err instanceof ForbiddenError || err instanceof UnauthorizedError) {
-          throw err;
+        if (options.requireSession) {
+          if (err instanceof ForbiddenError || err instanceof UnauthorizedError) {
+            throw err;
+          }
+          throw new UnauthorizedError('Application session is invalid or expired');
         }
-        throw new UnauthorizedError('Application session is invalid or expired');
+        // If requireSession is false, safely proceed without attaching invalid session
       }
     }
 

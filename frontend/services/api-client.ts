@@ -40,6 +40,9 @@ export class ApiClient {
     });
 
     const json = (await res.json()) as ApiResponse<T>;
+    if (!json.success && json.error?.message?.toLowerCase().includes('session')) {
+      authClient.clearSession();
+    }
     return json;
   }
 
