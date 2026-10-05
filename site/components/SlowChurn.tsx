@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { onSiteReady } from "@/lib/loading";
 import { getManifest, loadFrames } from "@/lib/frames";
-import DripEdge from "./DripEdge";
 import Heading from "./Heading";
 import { builder, slow } from "../content";
 
@@ -130,12 +129,10 @@ export default function SlowChurn() {
 
   return (
     <section ref={root} aria-label="Made the slow way" className="relative z-[1] h-[240vh] [.is-static_&]:h-auto">
-      {/* the cone builder's last colour drips into this section */}
-      <DripEdge color={builder.tints[builder.tints.length - 1]} layout={1} />
       <div aria-hidden data-record-label="Made slow: start" data-record-time="1.5" className="pointer-events-none absolute inset-x-0 top-0 h-px" />
       <div aria-hidden data-record-label="Made slow: pour" data-record-time="3.5" data-record-align="bottom" className="pointer-events-none absolute inset-x-0 bottom-0 h-px" />
 
-      <div className="sticky top-0 flex h-[100svh] items-center pt-[calc(var(--nav-h)-16px)] pb-4 md:pb-6 [.is-static_&]:relative">
+      <div className="sticky top-0 flex h-[100svh] items-center pt-[calc(var(--nav-h)+8px)] pb-4 md:pb-6 [.is-static_&]:relative">
         <div className="container-x h-full">
           <div className="relative flex h-full flex-col justify-center overflow-hidden rounded-[32px] md:block md:rounded-[48px]" style={{ background: slow.panel }}>
             {/* Left Content: Eyebrow, Heading, Paragraph at top; Badges neatly at bottom */}
