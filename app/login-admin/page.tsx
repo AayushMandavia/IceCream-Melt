@@ -122,11 +122,11 @@ export default function AdminLoginPage() {
       }}
     >
       {/* Main Split Container Card matching SS5 */}
-      <div className="relative w-full max-w-[1140px] bg-gradient-to-br from-[#fff7f9]/95 via-[#fef2f5]/95 to-[#fdeef2]/95 backdrop-blur-xl border border-[#f7cfd8] rounded-[36px] md:rounded-[44px] shadow-[0_30px_90px_-20px_rgba(180,40,80,0.2)] overflow-hidden grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] min-h-[590px]">
+      <div className="relative w-full max-w-[1120px] bg-[#fff6f8] border border-[#f7cfd8] rounded-[36px] md:rounded-[44px] shadow-[0_25px_80px_-15px_rgba(180,40,80,0.18)] overflow-hidden grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] min-h-[570px]">
         {/* ========================================================================= */}
         {/* Left Column: Brand, Heading, Live Badge, Stats & Hero Cone (SS5)          */}
         {/* ========================================================================= */}
-        <div className="p-7 sm:p-9 md:p-12 flex flex-col justify-between relative overflow-hidden">
+        <div className="p-7 sm:p-9 md:p-12 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-[#fff7f9] via-[#fef2f5] to-[#fdeef2]">
           {/* Top Brand Link Row */}
           <div className="flex items-center gap-3 relative z-30">
             <Link
@@ -245,196 +245,199 @@ export default function AdminLoginPage() {
           </div>
 
           {/* Ice Cream Cone Hero Composite Image (SS5 asset: login-cone-hero.png) */}
-          <div className="hidden md:block absolute -right-8 bottom-[-15px] lg:right-[-35px] lg:bottom-[-20px] w-[340px] lg:w-[410px] pointer-events-none select-none z-20">
+          <div className="hidden md:block absolute -right-8 bottom-[-15px] lg:right-[-25px] lg:bottom-[-20px] w-[340px] lg:w-[400px] pointer-events-none select-none z-30">
             <img
               src="/images/login/login-cone-hero.png"
               alt="Melt Triple Scoop Cone with Toppings"
-              className="w-full h-auto drop-shadow-[0_24px_45px_rgba(140,20,60,0.25)]"
+              className="w-full h-auto drop-shadow-[0_24px_45px_rgba(140,20,60,0.22)]"
             />
           </div>
         </div>
 
         {/* ========================================================================= */}
-        {/* Right Column: Crisp White Portal Login Card (SS5 asset: login-card-shape) */}
+        {/* Right Column: Crisp White Portal Login Section (SS5)                      */}
         {/* ========================================================================= */}
-        <div className="relative flex flex-col justify-center p-6 sm:p-9 md:p-12 z-30">
-          {/* Card background with organic wavy left edge (SS5 asset: login-card-shape.png) */}
-          <div
-            className="absolute inset-0 w-full h-full pointer-events-none select-none -z-10 hidden sm:block"
-            style={{
-              backgroundImage: "url('/images/login/login-card-shape.png')",
-              backgroundSize: '100% 100%',
-              backgroundRepeat: 'no-repeat',
-              filter: 'drop-shadow(0 20px 45px rgba(120, 20, 60, 0.12))',
-            }}
-          />
-          {/* Fallback solid white card background for small mobile screens */}
-          <div className="absolute inset-0 w-full h-full bg-white rounded-3xl border border-[#f4d3dd] sm:hidden -z-20" />
-
-          {/* Card Content Header */}
-          <div className="text-center mb-6 pl-0 sm:pl-3">
-            <div className="inline-flex items-center justify-center gap-1.5 text-[#d61c5d] font-['Fredoka_Variable',sans-serif] text-base font-bold">
-              <span>🍦</span>
-              <span>Melt Theory</span>
-            </div>
-            <h2 className="font-['Fredoka_Variable',sans-serif] text-[27px] font-black text-[#2b1233] leading-tight mt-1.5">
-              Staff &amp; Admin Portal
-            </h2>
-            <p className="text-[13.5px] font-semibold text-[#6f5569] mt-1.5 max-w-[320px] mx-auto leading-relaxed">
-              Authenticate with your management PIN to access live order fulfilment, inventory, and analytics.
-            </p>
-
-            {isLoggedIn && (
-              <div className="inline-flex items-center gap-2 mt-3 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200">
-                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                <span>Active Session: {loggedInRole ?? 'Verified'}</span>
-              </div>
-            )}
+        <div className="relative bg-white flex flex-col justify-center px-6 sm:px-10 lg:px-14 py-10 sm:py-12 z-20">
+          {/* Organic Liquid Wave Divider along left edge (Seamlessly joins white column to pink column) */}
+          <div className="hidden lg:block absolute top-0 bottom-0 -left-[54px] w-[55px] h-full pointer-events-none z-10 overflow-visible">
+            <svg
+              viewBox="0 0 100 485"
+              preserveAspectRatio="none"
+              className="w-full h-full text-white fill-current drop-shadow-[-8px_0_16px_rgba(180,40,80,0.06)]"
+            >
+              <path
+                d="M 48 0 C 53 6, 52 12, 45 16 C 36 21, 30 25, 30 36 C 30 46, 38 55, 43 65 C 47 72, 48 76, 48 85 L 48 260 C 47 268, 44 275, 40 282 C 32 292, 22 302, 19 318 C 16 330, 0 338, 0 355 C 0 372, 38 377, 46 385 C 48 388, 48 392, 48 400 L 48 430 C 47 440, 46 450, 46 460 C 46 470, 48 475, 56 485 L 100 485 L 100 0 Z"
+                fill="#ffffff"
+              />
+            </svg>
           </div>
 
-          {/* Portal Switcher Tabs (Owner Portal vs Operator Desk) */}
-          <div className="grid grid-cols-2 bg-[#fff1f4] p-1.5 rounded-2xl gap-1.5 mb-5 border border-[#f4d3dd]/60 pl-0 sm:pl-3">
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedRole('owner');
-                setError(null);
-              }}
-              className={`py-2.5 px-3 rounded-xl text-xs sm:text-[13px] font-extrabold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                selectedRole === 'owner'
-                  ? 'bg-white text-[#d61c5d] shadow-[0_4px_12px_rgba(120,20,60,0.12)]'
-                  : 'text-[#6f5569] hover:text-[#2b1233]'
-              }`}
-            >
-              <span>👑</span>
-              <span>Owner Portal</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedRole('operator');
-                setError(null);
-              }}
-              className={`py-2.5 px-3 rounded-xl text-xs sm:text-[13px] font-extrabold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                selectedRole === 'operator'
-                  ? 'bg-white text-[#d61c5d] shadow-[0_4px_12px_rgba(120,20,60,0.12)]'
-                  : 'text-[#6f5569] hover:text-[#2b1233]'
-              }`}
-            >
-              <span>📋</span>
-              <span>Operator Desk</span>
-            </button>
-          </div>
-
-          {/* Authentication Form */}
-          <form onSubmit={handleLogin} className="space-y-4 pl-0 sm:pl-3">
-            {/* Operator Branch Selector (shown only when Operator Desk is active) */}
-            {selectedRole === 'operator' && (
-              <div className="text-left">
-                <label className="block text-xs font-bold text-[#2b1233] mb-1.5">
-                  Select Branch Parlour
-                </label>
-                <select
-                  value={branch}
-                  onChange={(e) => setBranch(e.target.value as 'branch-alpha' | 'branch-beta')}
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#f4d3dd] bg-[#fffafb] text-[#2b1233] text-sm font-bold focus:outline-none focus:border-[#d61c5d]"
-                >
-                  <option value="branch-alpha">Jubilee Hills Parlour (Alpha)</option>
-                  <option value="branch-beta">Gachibowli Parlour (Beta)</option>
-                </select>
+          <div className="max-w-[340px] mx-auto w-full relative z-20">
+            {/* Card Content Header */}
+            <div className="text-center mb-5">
+              <div className="inline-flex items-center justify-center gap-1.5 text-[#d61c5d] font-['Fredoka_Variable',sans-serif] text-[15px] font-bold">
+                <span>🍦</span>
+                <span>Melt Theory</span>
               </div>
-            )}
+              <h2 className="font-['Fredoka_Variable',sans-serif] text-[26px] sm:text-[28px] font-black text-[#2b1233] leading-tight mt-1">
+                Staff &amp; Admin Portal
+              </h2>
+              <p className="text-[13px] font-semibold text-[#6f5569] mt-1.5 leading-relaxed">
+                Authenticate with your management PIN to access live order fulfilment, inventory, and analytics.
+              </p>
 
-            {/* PIN Header row & Input Box */}
-            <div className="text-left">
-              <div className="flex justify-between items-center mb-1.5">
-                <label className="text-xs font-bold text-[#2b1233]">
-                  Management Security PIN
-                </label>
-                <button
-                  type="button"
-                  onClick={() => setPin('123456')}
-                  className="text-xs font-bold text-[#d61c5d] hover:underline cursor-pointer"
-                  title="Click to fill default PIN"
-                >
-                  Default PIN: 123456
-                </button>
-              </div>
-
-              {/* Password Input with Golden Lock Icon inside */}
-              <div className="relative">
-                <input
-                  type={showPin ? 'text' : 'password'}
-                  maxLength={6}
-                  value={pin}
-                  onChange={(e) => setPin(e.target.value)}
-                  placeholder="••••••"
-                  className="w-full h-13 px-4 pr-12 rounded-2xl border border-[#f4d3dd] bg-white text-center text-xl font-black text-[#2b1233] tracking-[0.4em] focus:outline-none focus:border-[#d61c5d] focus:ring-2 focus:ring-[#d61c5d]/20 transition-all shadow-inner placeholder:tracking-[0.4em]"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPin(!showPin)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-lg text-[#8c6b79] hover:text-[#2b1233] transition-colors cursor-pointer"
-                  title={showPin ? 'Hide PIN' : 'Show PIN'}
-                >
-                  {showPin ? '👁️' : '🔒'}
-                </button>
-              </div>
-            </div>
-
-            {/* Error Message */}
-            {error && (
-              <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold text-center">
-                {error}
-              </div>
-            )}
-
-            {/* Unlock Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full h-13 rounded-2xl bg-[#d61c5d] hover:bg-[#b8144d] text-white font-extrabold text-[15px] shadow-[0_10px_25px_-5px_rgba(214,28,93,0.42)] transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-wait"
-            >
-              {loading ? (
-                <span>Authenticating...</span>
-              ) : (
-                <span>Unlock portal →</span>
+              {isLoggedIn && (
+                <div className="inline-flex items-center gap-2 mt-2.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span>Active Session: {loggedInRole ?? 'Verified'}</span>
+                </div>
               )}
-            </button>
-          </form>
-
-          {/* Footer Security Badge */}
-          <div className="mt-5 text-center flex items-center justify-center gap-1.5 text-[11.5px] font-semibold text-[#8c6b79] pl-0 sm:pl-3">
-            <span>🛡️</span>
-            <span>Secure access • Authorized staff only</span>
-          </div>
-
-          {/* Quick shortcuts if already logged in */}
-          {isLoggedIn && (
-            <div className="mt-5 pt-4 border-t border-[#f4d3dd] text-center pl-0 sm:pl-3">
-              <div className="flex items-center justify-center gap-2 flex-wrap">
-                <Link
-                  href="/owner"
-                  className="text-xs font-bold px-3 py-1.5 rounded-full bg-[#fff1f4] text-[#d61c5d] border border-[#f4d3dd] hover:bg-white transition-colors"
-                >
-                  👑 Owner Desk
-                </Link>
-                <Link
-                  href="/operator?branch=alpha"
-                  className="text-xs font-bold px-3 py-1.5 rounded-full bg-[#fff1f4] text-[#d61c5d] border border-[#f4d3dd] hover:bg-white transition-colors"
-                >
-                  📋 Jubilee Hills
-                </Link>
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="text-xs font-bold px-3 py-1.5 rounded-full bg-white text-rose-600 border border-rose-200 hover:bg-rose-50 transition-colors cursor-pointer"
-                >
-                  Sign Out
-                </button>
-              </div>
             </div>
-          )}
+
+            {/* Portal Switcher Tabs (Owner Portal vs Operator Desk) */}
+            <div className="grid grid-cols-2 bg-[#fff1f4] p-1.5 rounded-2xl gap-1.5 mb-5 border border-[#f4d3dd]/70">
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedRole('owner');
+                  setError(null);
+                }}
+                className={`py-2 px-3 rounded-xl text-xs sm:text-[13px] font-extrabold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  selectedRole === 'owner'
+                    ? 'bg-white text-[#d61c5d] shadow-[0_2px_8px_rgba(120,20,60,0.08)]'
+                    : 'text-[#6f5569] hover:text-[#2b1233]'
+                }`}
+              >
+                <span>👑</span>
+                <span>Owner Portal</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedRole('operator');
+                  setError(null);
+                }}
+                className={`py-2 px-3 rounded-xl text-xs sm:text-[13px] font-extrabold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                  selectedRole === 'operator'
+                    ? 'bg-white text-[#d61c5d] shadow-[0_2px_8px_rgba(120,20,60,0.08)]'
+                    : 'text-[#6f5569] hover:text-[#2b1233]'
+                }`}
+              >
+                <span>📋</span>
+                <span>Operator Desk</span>
+              </button>
+            </div>
+
+            {/* Authentication Form */}
+            <form onSubmit={handleLogin} className="space-y-4">
+              {/* Operator Branch Selector (shown only when Operator Desk is active) */}
+              {selectedRole === 'operator' && (
+                <div className="text-left">
+                  <label className="block text-xs font-bold text-[#2b1233] mb-1.5">
+                    Select Branch Parlour
+                  </label>
+                  <select
+                    value={branch}
+                    onChange={(e) => setBranch(e.target.value as 'branch-alpha' | 'branch-beta')}
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#f4d3dd] bg-[#fffafb] text-[#2b1233] text-sm font-bold focus:outline-none focus:border-[#d61c5d]"
+                  >
+                    <option value="branch-alpha">Jubilee Hills Parlour (Alpha)</option>
+                    <option value="branch-beta">Gachibowli Parlour (Beta)</option>
+                  </select>
+                </div>
+              )}
+
+              {/* PIN Header row & Input Box */}
+              <div className="text-left">
+                <div className="flex justify-between items-center mb-1.5">
+                  <label className="text-xs font-bold text-[#2b1233]">
+                    Management Security PIN
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setPin('123456')}
+                    className="text-xs font-bold text-[#d61c5d] hover:underline cursor-pointer"
+                    title="Click to fill default PIN"
+                  >
+                    Default PIN: 123456
+                  </button>
+                </div>
+
+                {/* Password Input with Golden Lock Icon inside */}
+                <div className="relative">
+                  <input
+                    type={showPin ? 'text' : 'password'}
+                    maxLength={6}
+                    value={pin}
+                    onChange={(e) => setPin(e.target.value)}
+                    placeholder="••••••"
+                    className="w-full h-12 px-4 pr-12 rounded-2xl border border-[#f4d3dd] bg-white text-center text-xl font-black text-[#2b1233] tracking-[0.4em] focus:outline-none focus:border-[#d61c5d] focus:ring-2 focus:ring-[#d61c5d]/20 transition-all shadow-inner placeholder:tracking-[0.4em]"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPin(!showPin)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-lg text-[#8c6b79] hover:text-[#2b1233] transition-colors cursor-pointer"
+                    title={showPin ? 'Hide PIN' : 'Show PIN'}
+                  >
+                    {showPin ? '👁️' : '🔒'}
+                  </button>
+                </div>
+              </div>
+
+              {/* Error Message */}
+              {error && (
+                <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold text-center">
+                  {error}
+                </div>
+              )}
+
+              {/* Unlock Button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full h-12 rounded-2xl bg-[#d61c5d] hover:bg-[#b8144d] text-white font-extrabold text-[15px] shadow-[0_8px_20px_-3px_rgba(214,28,93,0.38)] transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-wait"
+              >
+                {loading ? (
+                  <span>Authenticating...</span>
+                ) : (
+                  <span>Unlock portal →</span>
+                )}
+              </button>
+            </form>
+
+            {/* Footer Security Badge */}
+            <div className="mt-4 text-center flex items-center justify-center gap-1.5 text-[11.5px] font-semibold text-[#8c6b79]">
+              <span className="text-xs">🛡️</span>
+              <span>Secure access • Authorized staff only</span>
+            </div>
+
+            {/* Quick shortcuts if already logged in */}
+            {isLoggedIn && (
+              <div className="mt-4 pt-3 border-t border-[#f4d3dd] text-center">
+                <div className="flex items-center justify-center gap-2 flex-wrap">
+                  <Link
+                    href="/owner"
+                    className="text-xs font-bold px-3 py-1 rounded-full bg-[#fff1f4] text-[#d61c5d] border border-[#f4d3dd] hover:bg-white transition-colors"
+                  >
+                    👑 Owner Desk
+                  </Link>
+                  <Link
+                    href="/operator?branch=alpha"
+                    className="text-xs font-bold px-3 py-1 rounded-full bg-[#fff1f4] text-[#d61c5d] border border-[#f4d3dd] hover:bg-white transition-colors"
+                  >
+                    📋 Jubilee Hills
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="text-xs font-bold px-3 py-1 rounded-full bg-white text-rose-600 border border-rose-200 hover:bg-rose-50 transition-colors cursor-pointer"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
