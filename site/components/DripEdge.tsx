@@ -12,32 +12,46 @@ const LAYOUTS: [number, number, number][][] = [
 ];
 const BASE = 30;
 
-function dripPath(drips: [number, number, number][]) {
+function dripPath(drips: [number, number, number][], thick = false) {
   const f = (n: number) => n.toFixed(1);
+  const BASE = thick ? 40 : 30;
   let d = `M0 0H1440V${BASE}`;
   let x = 1440;
-  // walk right → left along the bottom edge: a soft sag between drips, then down a thin stem into a round bulb
-  for (const [cx, r, depth] of [...drips].sort((a, b) => b[0] - a[0])) {
-    const s = r * 0.62; // stem half-width
-    const k = r * 1.3; // how wide the drip spreads where it leaves the band
-    const y = BASE + depth - r; // bulb centre
-    d += `Q${f((x + cx + r + k) / 2)} ${BASE + 12} ${f(cx + r + k)} ${BASE}`;
-    d += `C${f(cx + s)} ${BASE} ${f(cx + s)} ${f(BASE + k * 0.6)} ${f(cx + s)} ${f(Math.max(BASE + k * 0.6, y - r * 1.6))}`;
-    d += `C${f(cx + s)} ${f(y - r * 1.1)} ${f(cx + r)} ${f(y - r * 0.8)} ${f(cx + r)} ${f(y)}`;
+  // walk right → left along the bottom edge: rich melted sag between drips, then down a voluptuous stem into a round bulb
+  for (const [cx, rawR, rawDepth] of [...drips].sort((a, b) => b[0] - a[0])) {
+    const r = thick ? Math.round(rawR * 1.5) : rawR;
+    const depth = thick ? Math.round(rawDepth * 1.15) : rawDepth;
+    const s = r * (thick ? 0.82 : 0.62); // thick, substantial stem
+    const k = r * (thick ? 1.45 : 1.3); // wider organic shoulder
+    const y = BASE + depth - r;
+    d += `Q${f((x + cx + r + k) / 2)} ${BASE + (thick ? 16 : 12)} ${f(cx + r + k)} ${BASE}`;
+    d += `C${f(cx + s)} ${BASE} ${f(cx + s)} ${f(BASE + k * 0.6)} ${f(cx + s)} ${f(Math.max(BASE + k * 0.6, y - r * 1.5))}`;
+    d += `C${f(cx + s)} ${f(y - r * 1.05)} ${f(cx + r)} ${f(y - r * 0.75)} ${f(cx + r)} ${f(y)}`;
     d += `A${r} ${r} 0 0 1 ${f(cx - r)} ${f(y)}`;
-    d += `C${f(cx - r)} ${f(y - r * 0.8)} ${f(cx - s)} ${f(y - r * 1.1)} ${f(cx - s)} ${f(Math.max(BASE + k * 0.6, y - r * 1.6))}`;
+    d += `C${f(cx - r)} ${f(y - r * 0.75)} ${f(cx - s)} ${f(y - r * 1.05)} ${f(cx - s)} ${f(Math.max(BASE + k * 0.6, y - r * 1.5))}`;
     d += `C${f(cx - s)} ${f(BASE + k * 0.6)} ${f(cx - s)} ${BASE} ${f(cx - r - k)} ${BASE}`;
     x = cx - r - k;
   }
-  return `${d}Q${f(x / 2)} ${BASE + 12} 0 ${BASE}Z`;
+  return `${d}Q${f(x / 2)} ${BASE + (thick ? 16 : 12)} 0 ${BASE}Z`;
 }
-const PATHS = LAYOUTS.map(dripPath);
+const PATHS = LAYOUTS.map((l) => dripPath(l, false));
+const THICK_PATHS = LAYOUTS.map((l) => dripPath(l, true));
 
 /**
  * S2 "melt drip" edge: sits at the top of a section and drips the colour of the section above into it.
  * The drips stretch a little longer as the section scrolls in.
  */
-export default function DripEdge({ color, layout = 0, flip = false }: { color: string; layout?: number; flip?: boolean }) {
+export default function DripEdge({
+  color,
+  layout = 0,
+  flip = false,
+  thick = false,
+}: {
+  color: string;
+  layout?: number;
+  flip?: boolean;
+  thick?: boolean;
+}) {
   const ref = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -59,8 +73,13 @@ export default function DripEdge({ color, layout = 0, flip = false }: { color: s
 
   return (
     <div aria-hidden className={`pointer-events-none absolute inset-x-0 top-[-1px] z-[2] ${flip ? "-scale-x-100" : ""}`}>
-      <svg ref={ref} viewBox="0 0 1440 160" preserveAspectRatio="none" className="block h-[clamp(52px,9vw,150px)] w-full origin-top">
-        <path d={PATHS[layout % PATHS.length]} fill={color} />
+      <svg
+        ref={ref}
+        viewBox={thick ? "0 0 1440 180" : "0 0 1440 160"}
+        preserveAspectRatio="none"
+        className={`block w-full origin-top ${thick ? "h-[clamp(70px,10vw,175px)]" : "h-[clamp(52px,9vw,150px)]"}`}
+      >
+        <path d={(thick ? THICK_PATHS : PATHS)[layout % PATHS.length]} fill={color} />
       </svg>
     </div>
   );
