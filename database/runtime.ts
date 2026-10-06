@@ -50,6 +50,17 @@ export function getDatabase(context?: { env?: CloudflareEnv } | CloudflareEnv): 
         return cachedLocalDb;
       }
 
+      const tursoUrl = process.env.TURSO_DATABASE_URL || process.env.LIBSQL_DATABASE_URL;
+      if (tursoUrl) {
+        const tursoAuthToken = process.env.TURSO_AUTH_TOKEN || process.env.LIBSQL_AUTH_TOKEN;
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        const { createLibSqlDatabase } = require('./adapter.libsql');
+        const tursoDb = createLibSqlDatabase(tursoUrl, tursoAuthToken);
+        cachedLocalDb = tursoDb;
+        console.log('[database] Connected to synchronized Turso cloud database:', tursoUrl);
+        return tursoDb;
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-require-imports
       const fs = require('node:fs');
       // eslint-disable-next-line @typescript-eslint/no-require-imports
