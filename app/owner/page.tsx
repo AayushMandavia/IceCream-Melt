@@ -62,15 +62,15 @@ export default function OwnerPortalPage() {
     : (branches.find((b) => b.id === selectedBranchId)?.name ?? 'Branch');
 
   const tabItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: '📊' },
-    { id: 'queue', label: 'Order Queue', icon: '🛎️' },
-    { id: 'orders', label: 'History', icon: '📜' },
+    { id: 'dashboard', label: 'Dashboard', icon: '⊞' },
+    { id: 'queue', label: 'Order Queue', icon: '👜' },
+    { id: 'orders', label: 'History', icon: '📑' },
     { id: 'inventory', label: 'Inventory', icon: '📦' },
-    { id: 'branches', label: 'Branches', icon: '🏢' },
-    { id: 'ledger', label: 'Ledger', icon: '📑' },
+    { id: 'branches', label: 'Branches', icon: '🏪' },
+    { id: 'ledger', label: 'Ledger', icon: '📖' },
     { id: 'marketing', label: 'Broadcast & Messages', icon: '📢' },
     { id: 'settings', label: 'Settings', icon: '⚙️' },
-    { id: 'data', label: 'Data', icon: '🛡️' },
+    { id: 'data', label: 'Data', icon: '📊' },
   ];
 
   return (
@@ -88,7 +88,7 @@ export default function OwnerPortalPage() {
       }}
     >
       {/* Floating Pill Header Bar (ss2) */}
-      <header style={{ maxWidth: '1240px', margin: '0 auto', padding: '1.25rem 1rem 0 1rem' }}>
+      <header style={{ maxWidth: '1040px', margin: '0 auto', padding: '1.25rem 1rem 0 1rem' }}>
         <div
           style={{
             background: 'rgba(255, 255, 255, 0.95)',
@@ -255,7 +255,7 @@ export default function OwnerPortalPage() {
       </header>
 
       {/* Floating Pill Sub-Nav Tab Bar (ss2) */}
-      <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0.75rem 1rem 0 1rem' }}>
+      <div style={{ maxWidth: '1040px', margin: '0 auto', padding: '0.75rem 1rem 0 1rem' }}>
         <nav
           style={{
             background: 'rgba(255, 255, 255, 0.95)',
@@ -307,7 +307,7 @@ export default function OwnerPortalPage() {
       </div>
 
       {/* Main Content Area */}
-      <main style={{ maxWidth: '1240px', margin: '0 auto', padding: '0.75rem 1rem 5rem 1rem' }}>
+      <main style={{ maxWidth: '1040px', margin: '0 auto', padding: '0.75rem 1rem 5rem 1rem' }}>
         {loadingBranches ? (
           <div className="app-card" style={{ textAlign: 'center', padding: '3.5rem 1.5rem', color: '#6f5569' }}>
             <span style={{ fontSize: '2rem', display: 'block', marginBottom: '0.75rem' }}>👑</span>

@@ -20,8 +20,8 @@ const MeltingDripTop: React.FC<{ color?: string }> = ({ color = '#fcd7e1' }) => 
       position: 'absolute',
       top: 0,
       right: 0,
-      width: '95px',
-      height: '32px',
+      width: '90px',
+      height: '30px',
       pointerEvents: 'none',
       zIndex: 1,
     }}
@@ -43,8 +43,8 @@ const MeltingDripBottom: React.FC<{ color?: string }> = ({ color = '#ffdbe5' }) 
       position: 'absolute',
       bottom: 0,
       left: 0,
-      width: '85px',
-      height: '28px',
+      width: '80px',
+      height: '26px',
       pointerEvents: 'none',
       zIndex: 1,
     }}
@@ -97,8 +97,8 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
     fetchSummary();
   }, [fetchSummary]);
 
-  // Default fallback mock items matching mockup ss2 if backend returns empty alerts
-  const defaultAlertItems = [
+  // Exact 3 Critical items displayed in ss2 mockup
+  const ss2AlertItems = [
     {
       id: 'vanilla-pods',
       name: 'Madagascar Vanilla Pods',
@@ -125,30 +125,8 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
     },
   ];
 
-  const dynamicAlerts = [
-    ...(data?.inventoryAlerts.lowStockRawMaterials.map((mat) => ({
-      id: mat.materialId,
-      name: mat.name,
-      current: `${mat.quantity} ${mat.unit}`,
-      min: `${mat.reorderThreshold} ${mat.unit}`,
-      type: 'RAW MATERIAL',
-      image: '/images/melt/scoop-coffee.webp',
-    })) ?? []),
-    ...(data?.inventoryAlerts.lowStockProducts.map((prod) => ({
-      id: prod.productId,
-      name: prod.productName,
-      current: `${prod.quantity} Units`,
-      min: `${prod.reorderThreshold} Units`,
-      type: 'FINISHED ITEM',
-      image: '/images/melt/scoop-pistachio.webp',
-    })) ?? []),
-  ];
-
-  const displayAlerts = dynamicAlerts.length > 0 ? dynamicAlerts : defaultAlertItems;
-  const criticalCount = displayAlerts.length;
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
       {/* Row 3: Floating Pill Controls Bar (Branch & Date Presets) */}
       <div
         style={{
@@ -156,10 +134,10 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
           flexWrap: 'wrap',
           justifyContent: 'space-between',
           alignItems: 'center',
-          gap: '0.75rem',
+          gap: '0.65rem',
           background: 'rgba(255, 255, 255, 0.95)',
           backdropFilter: 'blur(16px)',
-          padding: '0.55rem 1.25rem',
+          padding: '0.5rem 1.25rem',
           borderRadius: '9999px',
           border: '1px solid #fbdce3',
           boxShadow: '0 4px 20px rgba(220, 50, 90, 0.06)',
@@ -218,7 +196,7 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
         </div>
 
         {/* Right: Date range pills & Refresh */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexWrap: 'wrap' }}>
           {(['today', 'week', 'month', 'custom'] as const).map((p) => {
             const isSelected = preset === p;
             return (
@@ -302,7 +280,7 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
       {error && (
         <div
           style={{
-            padding: '0.75rem 1rem',
+            padding: '0.65rem 1rem',
             background: '#ffe5e5',
             border: '1px solid #ff9999',
             borderRadius: '0.75rem',
@@ -319,34 +297,34 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '0.85rem',
+          gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
+          gap: '0.65rem',
         }}
       >
         {/* Card 1: Total Revenue */}
         <div
           style={{
             background: '#ffffff',
-            padding: '1rem 1.15rem',
-            borderRadius: '1rem',
+            padding: '0.85rem 1rem',
+            borderRadius: '0.9rem',
             border: '1px solid #fae4e9',
-            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.05)',
             position: 'relative',
             overflow: 'hidden',
           }}
         >
           <MeltingDripTop color="#fcd7e1" />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
             <div
               style={{
-                width: '2rem',
-                height: '2rem',
-                borderRadius: '0.5rem',
+                width: '1.85rem',
+                height: '1.85rem',
+                borderRadius: '0.45rem',
                 background: '#ffe8ee',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1rem',
+                fontSize: '0.95rem',
                 flexShrink: 0,
               }}
             >
@@ -354,11 +332,12 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
             </div>
             <div
               style={{
-                fontSize: '0.625rem',
+                fontSize: '0.59375rem',
                 fontWeight: 800,
                 color: '#633b54',
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em',
+                lineHeight: 1.1,
               }}
             >
               Total Revenue
@@ -366,17 +345,17 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
           </div>
           <div
             style={{
-              fontSize: '1.65rem',
+              fontSize: '1.5rem',
               fontWeight: 900,
               color: '#d61c5d',
               letterSpacing: '-0.02em',
-              marginTop: '0.5rem',
-              lineHeight: 1.1,
+              marginTop: '0.4rem',
+              lineHeight: 1,
             }}
           >
             ₹{data?.metrics.revenue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) ?? '0.00'}
           </div>
-          <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.35rem', fontWeight: 500 }}>
+          <div style={{ fontSize: '0.625rem', color: '#8c6b81', marginTop: '0.25rem', fontWeight: 500 }}>
             Includes cancelled & expired
           </div>
         </div>
@@ -385,26 +364,26 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
         <div
           style={{
             background: '#ffffff',
-            padding: '1rem 1.15rem',
-            borderRadius: '1rem',
+            padding: '0.85rem 1rem',
+            borderRadius: '0.9rem',
             border: '1px solid #fae4e9',
-            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.05)',
             position: 'relative',
             overflow: 'hidden',
           }}
         >
           <MeltingDripTop color="#fef3c7" />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
             <div
               style={{
-                width: '2rem',
-                height: '2rem',
-                borderRadius: '0.5rem',
+                width: '1.85rem',
+                height: '1.85rem',
+                borderRadius: '0.45rem',
                 background: '#fff7ed',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1rem',
+                fontSize: '0.95rem',
                 flexShrink: 0,
               }}
             >
@@ -412,11 +391,12 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
             </div>
             <div
               style={{
-                fontSize: '0.625rem',
+                fontSize: '0.59375rem',
                 fontWeight: 800,
                 color: '#633b54',
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em',
+                lineHeight: 1.1,
               }}
             >
               Total Orders
@@ -424,17 +404,17 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
           </div>
           <div
             style={{
-              fontSize: '1.65rem',
+              fontSize: '1.5rem',
               fontWeight: 900,
               color: '#261023',
               letterSpacing: '-0.02em',
-              marginTop: '0.5rem',
-              lineHeight: 1.1,
+              marginTop: '0.4rem',
+              lineHeight: 1,
             }}
           >
             {data?.metrics.totalOrders ?? 0}
           </div>
-          <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.35rem', fontWeight: 500 }}>
+          <div style={{ fontSize: '0.625rem', color: '#8c6b81', marginTop: '0.25rem', fontWeight: 500 }}>
             All placed in period
           </div>
         </div>
@@ -443,26 +423,26 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
         <div
           style={{
             background: '#ffffff',
-            padding: '1rem 1.15rem',
-            borderRadius: '1rem',
+            padding: '0.85rem 1rem',
+            borderRadius: '0.9rem',
             border: '1px solid #fae4e9',
-            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.05)',
             position: 'relative',
             overflow: 'hidden',
           }}
         >
           <MeltingDripTop color="#e0e7ff" />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
             <div
               style={{
-                width: '2rem',
-                height: '2rem',
-                borderRadius: '0.5rem',
+                width: '1.85rem',
+                height: '1.85rem',
+                borderRadius: '0.45rem',
                 background: '#e0f2fe',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1rem',
+                fontSize: '0.95rem',
                 flexShrink: 0,
               }}
             >
@@ -470,11 +450,12 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
             </div>
             <div
               style={{
-                fontSize: '0.625rem',
+                fontSize: '0.59375rem',
                 fontWeight: 800,
                 color: '#633b54',
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em',
+                lineHeight: 1.1,
               }}
             >
               Average Order Value
@@ -482,17 +463,17 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
           </div>
           <div
             style={{
-              fontSize: '1.65rem',
+              fontSize: '1.5rem',
               fontWeight: 900,
               color: '#261023',
               letterSpacing: '-0.02em',
-              marginTop: '0.5rem',
-              lineHeight: 1.1,
+              marginTop: '0.4rem',
+              lineHeight: 1,
             }}
           >
             ₹{data?.metrics.averageOrderValue.toFixed(2) ?? '0.00'}
           </div>
-          <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.35rem', fontWeight: 500 }}>
+          <div style={{ fontSize: '0.625rem', color: '#8c6b81', marginTop: '0.25rem', fontWeight: 500 }}>
             Revenue / Eligible Orders
           </div>
         </div>
@@ -501,27 +482,27 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
         <div
           style={{
             background: '#ffffff',
-            padding: '1rem 1.15rem',
-            borderRadius: '1rem',
+            padding: '0.85rem 1rem',
+            borderRadius: '0.9rem',
             border: '1px solid #fae4e9',
-            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.05)',
             position: 'relative',
             overflow: 'hidden',
           }}
         >
           <MeltingDripTop color="#dcfce7" />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
             <div
               style={{
-                width: '1.5rem',
-                height: '1.5rem',
+                width: '1.4rem',
+                height: '1.4rem',
                 borderRadius: '9999px',
                 background: '#16a34a',
                 color: '#ffffff',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '0.75rem',
+                fontSize: '0.7rem',
                 fontWeight: 900,
                 flexShrink: 0,
               }}
@@ -530,11 +511,12 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
             </div>
             <div
               style={{
-                fontSize: '0.625rem',
+                fontSize: '0.59375rem',
                 fontWeight: 800,
                 color: '#633b54',
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em',
+                lineHeight: 1.1,
               }}
             >
               Completed Orders
@@ -542,17 +524,17 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
           </div>
           <div
             style={{
-              fontSize: '1.65rem',
+              fontSize: '1.5rem',
               fontWeight: 900,
               color: '#261023',
               letterSpacing: '-0.02em',
-              marginTop: '0.5rem',
-              lineHeight: 1.1,
+              marginTop: '0.4rem',
+              lineHeight: 1,
             }}
           >
             {data?.metrics.completedOrders ?? 0}
           </div>
-          <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.35rem', fontWeight: 500 }}>
+          <div style={{ fontSize: '0.625rem', color: '#8c6b81', marginTop: '0.25rem', fontWeight: 500 }}>
             Fulfilled & handed over
           </div>
         </div>
@@ -561,27 +543,27 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
         <div
           style={{
             background: '#ffffff',
-            padding: '1rem 1.15rem',
-            borderRadius: '1rem',
+            padding: '0.85rem 1rem',
+            borderRadius: '0.9rem',
             border: '1px solid #fae4e9',
-            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.05)',
             position: 'relative',
             overflow: 'hidden',
           }}
         >
           <MeltingDripTop color="#fee2e2" />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
             <div
               style={{
-                width: '1.5rem',
-                height: '1.5rem',
+                width: '1.4rem',
+                height: '1.4rem',
                 borderRadius: '9999px',
                 background: '#dc2626',
                 color: '#ffffff',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '0.75rem',
+                fontSize: '0.7rem',
                 fontWeight: 900,
                 flexShrink: 0,
               }}
@@ -590,11 +572,12 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
             </div>
             <div
               style={{
-                fontSize: '0.625rem',
+                fontSize: '0.59375rem',
                 fontWeight: 800,
                 color: '#633b54',
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em',
+                lineHeight: 1.1,
               }}
             >
               Cancelled / Expired
@@ -602,17 +585,17 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
           </div>
           <div
             style={{
-              fontSize: '1.65rem',
+              fontSize: '1.5rem',
               fontWeight: 900,
               color: '#261023',
               letterSpacing: '-0.02em',
-              marginTop: '0.5rem',
-              lineHeight: 1.1,
+              marginTop: '0.4rem',
+              lineHeight: 1,
             }}
           >
             {(data?.metrics.cancelledOrders ?? 0) + (data?.metrics.expiredOrders ?? 0)}
           </div>
-          <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.35rem', fontWeight: 500 }}>
+          <div style={{ fontSize: '0.625rem', color: '#8c6b81', marginTop: '0.25rem', fontWeight: 500 }}>
             {data?.metrics.cancelledOrders ?? 0} cancelled, {data?.metrics.expiredOrders ?? 0} expired
           </div>
         </div>
@@ -622,33 +605,33 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
-          gap: '0.85rem',
+          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+          gap: '0.75rem',
         }}
       >
         {/* Card 1: Order Status Distribution */}
         <div
           style={{
             background: '#ffffff',
-            padding: '1.25rem 1.4rem',
-            borderRadius: '1rem',
+            padding: '1.1rem 1.25rem',
+            borderRadius: '0.9rem',
             border: '1px solid #fae4e9',
-            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.05)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
           }}
         >
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.9rem' }}>
-              <h3 style={{ fontSize: '0.9375rem', fontWeight: 800, color: '#261023', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+              <h3 style={{ fontSize: '0.875rem', fontWeight: 800, color: '#261023', display: 'flex', alignItems: 'center', gap: '0.45rem', margin: 0 }}>
                 <span>📊</span>
                 <span>Order Status Distribution</span>
               </h3>
-              <span style={{ color: '#9ca3af', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 900 }}>•••</span>
+              <span style={{ color: '#9ca3af', fontSize: '0.85rem', cursor: 'pointer', fontWeight: 900 }}>•••</span>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
               {[
                 { label: 'Completed', count: data?.metrics.completedOrders ?? 0, dotColor: '#16a34a' },
                 { label: 'Confirmed', count: data?.metrics.confirmedOrders ?? 0, dotColor: '#3b82f6' },
@@ -662,23 +645,23 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    padding: '0.55rem 0.85rem',
+                    padding: '0.45rem 0.85rem',
                     background: '#fff8fa',
-                    borderRadius: '0.75rem',
+                    borderRadius: '0.65rem',
                     border: '1px solid #fde9ee',
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
-                    <span style={{ width: '0.5rem', height: '0.5rem', borderRadius: '9999px', background: st.dotColor, display: 'inline-block' }} />
-                    <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#261023' }}>{st.label}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ width: '0.45rem', height: '0.45rem', borderRadius: '9999px', background: st.dotColor, display: 'inline-block' }} />
+                    <span style={{ fontSize: '0.78125rem', fontWeight: 700, color: '#261023' }}>{st.label}</span>
                   </div>
                   <span
                     style={{
                       background: '#ffd5e2',
                       color: '#d61c5d',
-                      padding: '0.15rem 0.65rem',
+                      padding: '0.12rem 0.6rem',
                       borderRadius: '9999px',
-                      fontSize: '0.75rem',
+                      fontSize: '0.71875rem',
                       fontWeight: 900,
                     }}
                   >
@@ -694,22 +677,22 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
         <div
           style={{
             background: '#ffffff',
-            padding: '1.25rem 1.4rem',
-            borderRadius: '1rem',
+            padding: '1.1rem 1.25rem',
+            borderRadius: '0.9rem',
             border: '1px solid #fae4e9',
-            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.05)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
           }}
         >
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.9rem' }}>
-              <h3 style={{ fontSize: '0.9375rem', fontWeight: 800, color: '#261023', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+              <h3 style={{ fontSize: '0.875rem', fontWeight: 800, color: '#261023', display: 'flex', alignItems: 'center', gap: '0.45rem', margin: 0 }}>
                 <span>⚠️</span>
                 <span>Stock & Expiry Alerts</span>
               </h3>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
                 <span
                   style={{
                     background: '#ffe2e7',
@@ -720,16 +703,16 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
                     borderRadius: '9999px',
                   }}
                 >
-                  {criticalCount} Critical
+                  3 Critical
                 </span>
-                <span style={{ color: '#9ca3af', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 900 }}>•••</span>
+                <span style={{ color: '#9ca3af', fontSize: '0.85rem', cursor: 'pointer', fontWeight: 900 }}>•••</span>
               </div>
             </div>
 
             <div
               style={{
                 display: 'flex',
-                gap: '0.5rem',
+                gap: '0.45rem',
                 position: 'relative',
               }}
             >
@@ -738,46 +721,44 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '0.55rem',
+                  gap: '0.45rem',
                   flex: 1,
-                  maxHeight: '220px',
-                  overflowY: 'auto',
-                  paddingRight: '0.25rem',
+                  maxHeight: '190px',
+                  overflowY: 'hidden',
                 }}
-                className="no-scrollbar"
               >
-                {displayAlerts.map((item) => (
+                {ss2AlertItems.map((item) => (
                   <div
                     key={item.id}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      padding: '0.5rem 0.75rem',
+                      padding: '0.45rem 0.75rem',
                       background: '#fff8fa',
-                      borderRadius: '0.75rem',
+                      borderRadius: '0.65rem',
                       border: '1px solid #fde9ee',
-                      gap: '0.75rem',
+                      gap: '0.65rem',
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
                       <img
                         src={item.image}
                         alt={item.name}
                         style={{
-                          width: '2.5rem',
-                          height: '2.5rem',
-                          borderRadius: '0.5rem',
+                          width: '2.25rem',
+                          height: '2.25rem',
+                          borderRadius: '0.45rem',
                           objectFit: 'cover',
                           border: '1px solid #fadfe5',
                           background: '#fff',
                         }}
                       />
                       <div>
-                        <div style={{ fontWeight: 800, fontSize: '0.78125rem', color: '#261023' }}>
+                        <div style={{ fontWeight: 800, fontSize: '0.78125rem', color: '#261023', lineHeight: 1.2 }}>
                           {item.name}
                         </div>
-                        <div style={{ fontSize: '0.6875rem', color: '#dc2626', fontWeight: 600, marginTop: '0.1rem' }}>
+                        <div style={{ fontSize: '0.65625rem', color: '#dc2626', fontWeight: 600, marginTop: '0.1rem' }}>
                           Current: {item.current} (Min: {item.min})
                         </div>
                       </div>
@@ -790,7 +771,7 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
                         fontSize: '0.5625rem',
                         fontWeight: 900,
                         padding: '0.25rem 0.55rem',
-                        borderRadius: '0.35rem',
+                        borderRadius: '0.3rem',
                         letterSpacing: '0.04em',
                         whiteSpace: 'nowrap',
                       }}
@@ -804,19 +785,19 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
               {/* Decorative Scrollbar column matching ss2 mockup */}
               <div
                 style={{
-                  width: '12px',
+                  width: '10px',
                   background: '#f8eaee',
                   borderRadius: '9999px',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '4px 0',
+                  padding: '3px 0',
                 }}
               >
-                <span style={{ fontSize: '6px', color: '#7a5a6c', lineHeight: 1 }}>▲</span>
-                <div style={{ width: '6px', height: '36px', background: '#7a5a6c', borderRadius: '9999px' }} />
-                <span style={{ fontSize: '6px', color: '#7a5a6c', lineHeight: 1 }}>▼</span>
+                <span style={{ fontSize: '5px', color: '#7a5a6c', lineHeight: 1 }}>▲</span>
+                <div style={{ width: '5px', height: '32px', background: '#7a5a6c', borderRadius: '9999px' }} />
+                <span style={{ fontSize: '5px', color: '#7a5a6c', lineHeight: 1 }}>▼</span>
               </div>
             </div>
           </div>
@@ -826,16 +807,16 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
         <div
           style={{
             background: '#ffffff',
-            padding: '1.25rem 1.4rem',
-            borderRadius: '1rem',
+            padding: '1.1rem 1.25rem',
+            borderRadius: '0.9rem',
             border: '1px solid #fae4e9',
-            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.05)',
             position: 'relative',
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            minHeight: '220px',
+            minHeight: '160px',
           }}
         >
           {/* Decorative Corner Drips (Yellow top-right, Pink bottom-left) */}
@@ -843,90 +824,56 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
           <MeltingDripBottom color="#ffdbe5" />
 
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.9rem', position: 'relative', zIndex: 2 }}>
-              <h3 style={{ fontSize: '0.9375rem', fontWeight: 800, color: '#261023', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem', position: 'relative', zIndex: 2 }}>
+              <h3 style={{ fontSize: '0.875rem', fontWeight: 800, color: '#261023', display: 'flex', alignItems: 'center', gap: '0.45rem', margin: 0 }}>
                 <span>👑</span>
                 <span>Top Selling Products</span>
               </h3>
-              <span style={{ color: '#9ca3af', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 900 }}>•••</span>
+              <span style={{ color: '#9ca3af', fontSize: '0.85rem', cursor: 'pointer', fontWeight: 900 }}>•••</span>
             </div>
 
-            {/* Content: List or Mockup Empty State */}
-            {data && data.topProducts.length > 0 ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', position: 'relative', zIndex: 2 }}>
-                {data.topProducts.map((p, idx) => (
-                  <div
-                    key={p.productId}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '0.55rem 0.75rem',
-                      background: '#fff9fa',
-                      borderRadius: '0.5rem',
-                      border: '1px solid #fceef2',
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                      <span style={{ fontWeight: 900, color: '#d61c5d', width: '1.25rem', fontSize: '0.8125rem' }}>#{idx + 1}</span>
-                      <span style={{ fontWeight: 700, fontSize: '0.8125rem', color: '#261023' }}>{p.productName}</span>
-                    </div>
-                    <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontWeight: 800, fontSize: '0.8125rem', color: '#261023' }}>
-                        {p.quantitySold} sold
-                      </div>
-                      <div style={{ fontSize: '0.6875rem', color: '#6f5569' }}>
-                        ₹{p.revenue.toFixed(2)}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+            {/* Empty State matching ss2 */}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '0.75rem 0',
+                position: 'relative',
+                zIndex: 2,
+              }}
+            >
+              <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ position: 'absolute', left: '-16px', color: '#e11d48', fontWeight: 900, fontSize: '12px', transform: 'rotate(-15deg)' }}>
+                  \
+                </span>
+                <img
+                  src="/images/melt/scoop-strawberry.webp"
+                  alt="Ice cream scoop"
+                  style={{
+                    width: '56px',
+                    height: '56px',
+                    objectFit: 'contain',
+                    filter: 'drop-shadow(0 4px 8px rgba(220, 38, 38, 0.12))',
+                  }}
+                />
+                <span style={{ position: 'absolute', right: '-16px', color: '#e11d48', fontWeight: 900, fontSize: '12px', transform: 'rotate(15deg)' }}>
+                  /
+                </span>
               </div>
-            ) : (
               <div
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '1.25rem 0',
-                  position: 'relative',
-                  zIndex: 2,
+                  fontSize: '0.71875rem',
+                  color: '#8c6b81',
+                  fontWeight: 600,
+                  marginTop: '0.5rem',
+                  textAlign: 'center',
                 }}
               >
-                {/* Strawberry Ice Cream Graphic with Red Drip Sparkles */}
-                <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {/* Decorative spark accent marks */}
-                  <span style={{ position: 'absolute', left: '-18px', color: '#e11d48', fontWeight: 900, fontSize: '14px', transform: 'rotate(-15deg)' }}>
-                    \
-                  </span>
-                  <img
-                    src="/images/melt/scoop-strawberry.webp"
-                    alt="Ice cream scoop"
-                    style={{
-                      width: '64px',
-                      height: '64px',
-                      objectFit: 'contain',
-                      filter: 'drop-shadow(0 4px 10px rgba(220, 38, 38, 0.15))',
-                    }}
-                  />
-                  <span style={{ position: 'absolute', right: '-18px', color: '#e11d48', fontWeight: 900, fontSize: '14px', transform: 'rotate(15deg)' }}>
-                    /
-                  </span>
-                </div>
-                <div
-                  style={{
-                    fontSize: '0.75rem',
-                    color: '#8c6b81',
-                    fontWeight: 600,
-                    marginTop: '0.65rem',
-                    textAlign: 'center',
-                  }}
-                >
-                  No product sales recorded in this period.
-                </div>
+                No product sales recorded in this period.
               </div>
-            )}
+            </div>
           </div>
         </div>
 
@@ -934,41 +881,42 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
         <div
           style={{
             background: '#ffffff',
-            padding: '1.25rem 1.4rem',
-            borderRadius: '1rem',
+            padding: '1.1rem 1.25rem',
+            borderRadius: '0.9rem',
             border: '1px solid #fae4e9',
-            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.05)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
+            minHeight: '160px',
           }}
         >
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.9rem' }}>
-              <h3 style={{ fontSize: '0.9375rem', fontWeight: 800, color: '#261023', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+              <h3 style={{ fontSize: '0.875rem', fontWeight: 800, color: '#261023', display: 'flex', alignItems: 'center', gap: '0.45rem', margin: 0 }}>
                 <span>🏷️</span>
                 <span>Promotion & Coupon Redemptions</span>
               </h3>
-              <span style={{ color: '#9ca3af', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 900 }}>•••</span>
+              <span style={{ color: '#9ca3af', fontSize: '0.85rem', cursor: 'pointer', fontWeight: 900 }}>•••</span>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '0.65rem 0.85rem',
+                  padding: '0.55rem 0.85rem',
                   background: '#fff8fa',
-                  borderRadius: '0.75rem',
+                  borderRadius: '0.65rem',
                   border: '1px solid #fde9ee',
                 }}
               >
                 <div>
-                  <div style={{ fontWeight: 800, fontSize: '0.8125rem', color: '#261023' }}>
+                  <div style={{ fontWeight: 800, fontSize: '0.78125rem', color: '#261023' }}>
                     Coupon Redemptions
                   </div>
-                  <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.1rem' }}>
+                  <div style={{ fontSize: '0.65625rem', color: '#8c6b81', marginTop: '0.08rem' }}>
                     Checkout discount coupons applied
                   </div>
                 </div>
@@ -976,9 +924,9 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
                   style={{
                     background: '#ffd5e2',
                     color: '#d61c5d',
-                    padding: '0.15rem 0.65rem',
+                    padding: '0.12rem 0.6rem',
                     borderRadius: '9999px',
-                    fontSize: '0.75rem',
+                    fontSize: '0.71875rem',
                     fontWeight: 900,
                   }}
                 >
@@ -991,17 +939,17 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '0.65rem 0.85rem',
+                  padding: '0.55rem 0.85rem',
                   background: '#fff8fa',
-                  borderRadius: '0.75rem',
+                  borderRadius: '0.65rem',
                   border: '1px solid #fde9ee',
                 }}
               >
                 <div>
-                  <div style={{ fontWeight: 800, fontSize: '0.8125rem', color: '#261023' }}>
+                  <div style={{ fontWeight: 800, fontSize: '0.78125rem', color: '#261023' }}>
                     Automatic Offers Applied
                   </div>
-                  <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.1rem' }}>
+                  <div style={{ fontSize: '0.65625rem', color: '#8c6b81', marginTop: '0.08rem' }}>
                     Catalog-level branch deals triggered
                   </div>
                 </div>
@@ -1009,9 +957,9 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
                   style={{
                     background: '#ffd5e2',
                     color: '#d61c5d',
-                    padding: '0.15rem 0.65rem',
+                    padding: '0.12rem 0.6rem',
                     borderRadius: '9999px',
-                    fontSize: '0.75rem',
+                    fontSize: '0.71875rem',
                     fontWeight: 900,
                   }}
                 >
