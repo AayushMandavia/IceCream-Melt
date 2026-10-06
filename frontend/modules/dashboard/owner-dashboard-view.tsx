@@ -113,7 +113,7 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
       current: '1.2 KG',
       min: '2 KG',
       type: 'RAW MATERIAL',
-      image: '/images/melt/scoop-cocoa.webp',
+      image: '/images/melt/topping-chocolate.webp',
     },
     {
       id: 'dark-callets',
@@ -121,7 +121,7 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
       current: '1.2 KG',
       min: '8 KG',
       type: 'RAW MATERIAL',
-      image: '/images/melt/scoop-cocoa.webp',
+      image: '/images/melt/topping-chocolate.webp',
     },
   ];
 

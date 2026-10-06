@@ -10,7 +10,7 @@ import { UnifiedLedgerView } from '@/frontend/modules/ledger';
 import { OperatorInventoryView } from '@/frontend/modules/inventory';
 import { OwnerMessagingView } from '@/frontend/modules/marketing';
 import { Branch } from '@/shared/types/entities.types';
-import { GlobalNavigation, BunMobileNav } from '@/frontend/components/ui';
+import { BunMobileNav } from '@/frontend/components/ui';
 
 type OwnerTab =
   | 'dashboard'
@@ -52,19 +52,16 @@ export default function OwnerPortalPage() {
     setActiveTab('settings');
   };
 
-  const branchOptions = [
-    { id: 'ALL', name: 'All Branches (Enterprise)', code: 'GLOBAL' },
-    ...branches.map((b) => ({ id: b.id, name: b.name, code: b.code })),
-  ];
+  const currentBranchName =
+    selectedBranchId === 'ALL'
+      ? 'All Branches'
+      : (branches.find((b) => b.id === selectedBranchId)?.name ?? 'Branch');
 
-  const currentBranchName = selectedBranchId === 'ALL'
-    ? 'All Branches'
-    : (branches.find((b) => b.id === selectedBranchId)?.name ?? 'Branch');
-
+  // Exact tabs matching img 2
   const tabItems = [
     { id: 'dashboard', label: 'Dashboard', icon: '⊞' },
     { id: 'queue', label: 'Order Queue', icon: '👜' },
-    { id: 'orders', label: 'History', icon: '📑' },
+    { id: 'orders', label: 'History', icon: '📜' },
     { id: 'inventory', label: 'Inventory', icon: '📦' },
     { id: 'branches', label: 'Branches', icon: '🏪' },
     { id: 'ledger', label: 'Ledger', icon: '📖' },
@@ -87,41 +84,41 @@ export default function OwnerPortalPage() {
         fontFamily: 'var(--font-body-family), system-ui, sans-serif',
       }}
     >
-      {/* Floating Pill Header Bar (ss2) */}
-      <header style={{ maxWidth: '1040px', margin: '0 auto', padding: '1.25rem 1rem 0 1rem' }}>
+      {/* Row 1: Floating Pill Header Bar (matching img 2) */}
+      <header style={{ maxWidth: '1160px', margin: '0 auto', padding: '0.65rem 1rem 0 1rem' }}>
         <div
           style={{
             background: 'rgba(255, 255, 255, 0.95)',
             backdropFilter: 'blur(16px)',
             borderRadius: '9999px',
-            boxShadow: '0 4px 25px rgba(220, 50, 90, 0.08)',
+            boxShadow: '0 4px 20px rgba(220, 50, 90, 0.07)',
             border: '1px solid #fbdce3',
-            padding: '0.625rem 1.25rem',
+            padding: '0.45rem 1.15rem',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             gap: '0.75rem',
           }}
         >
-          {/* Left: Brand + Subtitle + Dropdown Pill */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          {/* Left: Soft-serve cone + MELT + OWNER PORTAL + Dropdown */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
             <Link
               href="/"
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem',
+                gap: '0.45rem',
                 textDecoration: 'none',
                 color: '#2b1233',
               }}
             >
-              <span style={{ fontSize: '1.5rem', lineHeight: 1 }}>🍦</span>
+              <span style={{ fontSize: '1.45rem', lineHeight: 1 }}>🍦</span>
               <div>
                 <span
                   style={{
                     fontFamily: 'var(--font-display-family)',
                     fontWeight: 900,
-                    fontSize: '1.25rem',
+                    fontSize: '1.2rem',
                     letterSpacing: '-0.02em',
                     color: '#d61c5d',
                     display: 'block',
@@ -132,13 +129,13 @@ export default function OwnerPortalPage() {
                 </span>
                 <span
                   style={{
-                    fontSize: '0.5625rem',
+                    fontSize: '0.53125rem',
                     fontWeight: 800,
                     textTransform: 'uppercase',
                     letterSpacing: '0.12em',
                     color: '#75506b',
                     display: 'block',
-                    marginTop: '0.1rem',
+                    marginTop: '0.08rem',
                   }}
                 >
                   OWNER PORTAL
@@ -151,42 +148,42 @@ export default function OwnerPortalPage() {
               className="hidden sm:flex"
               style={{
                 alignItems: 'center',
-                gap: '0.4rem',
+                gap: '0.35rem',
                 background: '#fff2f5',
                 border: '1px solid #f8d2dc',
                 borderRadius: '9999px',
-                padding: '0.35rem 0.9rem',
-                fontSize: '0.75rem',
+                padding: '0.3rem 0.85rem',
+                fontSize: '0.71875rem',
                 fontWeight: 700,
                 color: '#441a37',
                 cursor: 'pointer',
               }}
             >
               <span>Enterprise Analytics & Controls</span>
-              <span style={{ fontSize: '0.65rem' }}>▼</span>
+              <span style={{ fontSize: '0.6rem' }}>▼</span>
             </div>
           </div>
 
-          {/* Right: Menu, Operator, Owner, Staff Desk */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+          {/* Right: Menu, Operator, Owner, Staff Desk (matching img 2) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
             <Link
               href="/order"
               className="hidden md:inline-flex"
               style={{
-                padding: '0.35rem 0.85rem',
+                padding: '0.3rem 0.8rem',
                 borderRadius: '9999px',
                 border: '1px solid #f8d2dc',
                 background: '#ffffff',
-                color: '#552747',
+                color: '#b91c1c',
                 textDecoration: 'none',
-                fontSize: '0.75rem',
+                fontSize: '0.71875rem',
                 fontWeight: 700,
                 alignItems: 'center',
-                gap: '0.35rem',
+                gap: '0.3rem',
                 transition: 'all 0.15s ease',
               }}
             >
-              <span>🍽️</span>
+              <span>🍴</span>
               <span>Menu</span>
             </Link>
 
@@ -194,16 +191,16 @@ export default function OwnerPortalPage() {
               href="/operator"
               className="hidden md:inline-flex"
               style={{
-                padding: '0.35rem 0.85rem',
+                padding: '0.3rem 0.8rem',
                 borderRadius: '9999px',
                 border: '1px solid #f8d2dc',
                 background: '#ffffff',
-                color: '#552747',
+                color: '#4a253f',
                 textDecoration: 'none',
-                fontSize: '0.75rem',
+                fontSize: '0.71875rem',
                 fontWeight: 700,
                 alignItems: 'center',
-                gap: '0.35rem',
+                gap: '0.3rem',
                 transition: 'all 0.15s ease',
               }}
             >
@@ -213,16 +210,16 @@ export default function OwnerPortalPage() {
 
             <div
               style={{
-                padding: '0.35rem 0.95rem',
+                padding: '0.3rem 0.95rem',
                 borderRadius: '9999px',
                 background: '#d61c5d',
                 color: '#ffffff',
-                fontSize: '0.75rem',
+                fontSize: '0.71875rem',
                 fontWeight: 800,
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.35rem',
-                boxShadow: '0 2px 8px rgba(214, 28, 93, 0.3)',
+                gap: '0.3rem',
+                boxShadow: '0 2px 8px rgba(214, 28, 93, 0.25)',
               }}
             >
               <span>👑</span>
@@ -232,41 +229,41 @@ export default function OwnerPortalPage() {
             <Link
               href="/operator"
               style={{
-                padding: '0.35rem 0.85rem',
+                padding: '0.3rem 0.8rem',
                 borderRadius: '9999px',
                 border: '1px solid #f8d2dc',
                 background: '#ffffff',
-                color: '#552747',
+                color: '#4a253f',
                 textDecoration: 'none',
-                fontSize: '0.75rem',
+                fontSize: '0.71875rem',
                 fontWeight: 700,
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.35rem',
+                gap: '0.3rem',
                 transition: 'all 0.15s ease',
               }}
             >
               <span>👥</span>
               <span>Staff Desk</span>
-              <span style={{ fontSize: '0.65rem' }}>▼</span>
+              <span style={{ fontSize: '0.6rem' }}>▼</span>
             </Link>
           </div>
         </div>
       </header>
 
-      {/* Floating Pill Sub-Nav Tab Bar (ss2) */}
-      <div style={{ maxWidth: '1040px', margin: '0 auto', padding: '0.75rem 1rem 0 1rem' }}>
+      {/* Row 2: Floating Pill Sub-Nav Tab Bar (matching img 2) */}
+      <div style={{ maxWidth: '1160px', margin: '0 auto', padding: '0.4rem 1rem 0 1rem' }}>
         <nav
           style={{
             background: 'rgba(255, 255, 255, 0.95)',
             backdropFilter: 'blur(16px)',
             borderRadius: '9999px',
-            boxShadow: '0 4px 25px rgba(220, 50, 90, 0.08)',
+            boxShadow: '0 4px 20px rgba(220, 50, 90, 0.07)',
             border: '1px solid #fbdce3',
-            padding: '0.5rem 0.75rem',
+            padding: '0.35rem 0.65rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.35rem',
+            gap: '0.25rem',
             overflowX: 'auto',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -281,24 +278,24 @@ export default function OwnerPortalPage() {
                 type="button"
                 onClick={() => setActiveTab(tab.id as OwnerTab)}
                 style={{
-                  padding: '0.4rem 0.95rem',
+                  padding: '0.35rem 0.85rem',
                   background: isActive ? '#d61c5d' : 'transparent',
                   border: 'none',
                   borderRadius: '9999px',
-                  color: isActive ? '#ffffff' : '#552747',
+                  color: isActive ? '#ffffff' : '#4a253f',
                   fontWeight: 800,
-                  fontSize: '0.8125rem',
+                  fontSize: '0.75rem',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.35rem',
-                  boxShadow: isActive ? '0 2px 8px rgba(214, 28, 93, 0.3)' : 'none',
+                  gap: '0.3rem',
+                  boxShadow: isActive ? '0 2px 8px rgba(214, 28, 93, 0.25)' : 'none',
                   transition: 'all 0.15s ease',
                   whiteSpace: 'nowrap',
                   flexShrink: 0,
                 }}
               >
-                <span>{tab.icon}</span>
+                <span style={{ fontSize: '0.85rem' }}>{tab.icon}</span>
                 <span>{tab.label}</span>
               </button>
             );
@@ -307,7 +304,7 @@ export default function OwnerPortalPage() {
       </div>
 
       {/* Main Content Area */}
-      <main style={{ maxWidth: '1040px', margin: '0 auto', padding: '0.75rem 1rem 5rem 1rem' }}>
+      <main style={{ maxWidth: '1160px', margin: '0 auto', padding: '0.4rem 1rem 2rem 1rem' }}>
         {loadingBranches ? (
           <div className="app-card" style={{ textAlign: 'center', padding: '3.5rem 1.5rem', color: '#6f5569' }}>
             <span style={{ fontSize: '2rem', display: 'block', marginBottom: '0.75rem' }}>👑</span>
@@ -324,28 +321,6 @@ export default function OwnerPortalPage() {
             )}
             {activeTab === 'queue' && (
               <div>
-                {selectedBranchId === 'ALL' && branches.length > 0 && (
-                  <div
-                    style={{
-                      marginBottom: '1rem',
-                      padding: '0.75rem 1.25rem',
-                      background: '#eff6ff',
-                      border: '1px solid #bfdbfe',
-                      borderRadius: '1rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      color: '#1e40af',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                    }}
-                  >
-                    <span>
-                      📍 Viewing live queue for default branch: <strong style={{ color: '#1e3a8a' }}>{branches[0].name}</strong>.
-                      Select a specific branch in the header to switch branches.
-                    </span>
-                  </div>
-                )}
                 <OperatorQueueView
                   branchId={selectedBranchId === 'ALL' && branches[0] ? branches[0].id : selectedBranchId}
                   isOwner={true}
