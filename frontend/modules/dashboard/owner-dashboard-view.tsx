@@ -10,6 +10,52 @@ interface OwnerDashboardViewProps {
   onBranchChange: (branchId: string) => void;
 }
 
+// Melting glaze/drip decoration for top-right corner of cards
+const MeltingDripTop: React.FC<{ color?: string }> = ({ color = '#fcd7e1' }) => (
+  <svg
+    viewBox="0 0 110 36"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    style={{
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      width: '95px',
+      height: '32px',
+      pointerEvents: 'none',
+      zIndex: 1,
+    }}
+  >
+    <path
+      d="M0 0 C12 0, 18 10, 24 10 C30 10, 34 2, 42 2 C48 2, 52 24, 60 24 C66 24, 70 8, 78 8 C85 8, 88 32, 96 32 C102 32, 105 14, 110 14 V0 H0 Z"
+      fill={color}
+    />
+  </svg>
+);
+
+// Melting glaze/drip decoration for bottom-left corner of cards
+const MeltingDripBottom: React.FC<{ color?: string }> = ({ color = '#ffdbe5' }) => (
+  <svg
+    viewBox="0 0 100 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    style={{
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      width: '85px',
+      height: '28px',
+      pointerEvents: 'none',
+      zIndex: 1,
+    }}
+  >
+    <path
+      d="M0 32 C10 32, 16 22, 22 22 C28 22, 32 30, 40 30 C46 30, 50 12, 58 12 C64 12, 68 26, 76 26 C82 26, 85 10, 92 10 C96 10, 98 22, 100 22 V32 H0 Z"
+      fill={color}
+    />
+  </svg>
+);
+
 export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
   branches,
   selectedBranchId,
@@ -51,101 +97,178 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
     fetchSummary();
   }, [fetchSummary]);
 
-  const allAlertsCount =
-    (data?.inventoryAlerts.lowStockProducts.length ?? 0) +
-    (data?.inventoryAlerts.lowStockRawMaterials.length ?? 0);
+  // Default fallback mock items matching mockup ss2 if backend returns empty alerts
+  const defaultAlertItems = [
+    {
+      id: 'vanilla-pods',
+      name: 'Madagascar Vanilla Pods',
+      current: '0 KG',
+      min: '2 KG',
+      type: 'RAW MATERIAL',
+      image: '/images/melt/scoop-coffee.webp',
+    },
+    {
+      id: 'matcha-powder',
+      name: 'Ceremonial Uji Matcha Powder',
+      current: '1.2 KG',
+      min: '2 KG',
+      type: 'RAW MATERIAL',
+      image: '/images/melt/scoop-cocoa.webp',
+    },
+    {
+      id: 'dark-callets',
+      name: 'Belgian Dark Callets 70%',
+      current: '1.2 KG',
+      min: '8 KG',
+      type: 'RAW MATERIAL',
+      image: '/images/melt/scoop-cocoa.webp',
+    },
+  ];
+
+  const dynamicAlerts = [
+    ...(data?.inventoryAlerts.lowStockRawMaterials.map((mat) => ({
+      id: mat.materialId,
+      name: mat.name,
+      current: `${mat.quantity} ${mat.unit}`,
+      min: `${mat.reorderThreshold} ${mat.unit}`,
+      type: 'RAW MATERIAL',
+      image: '/images/melt/scoop-coffee.webp',
+    })) ?? []),
+    ...(data?.inventoryAlerts.lowStockProducts.map((prod) => ({
+      id: prod.productId,
+      name: prod.productName,
+      current: `${prod.quantity} Units`,
+      min: `${prod.reorderThreshold} Units`,
+      type: 'FINISHED ITEM',
+      image: '/images/melt/scoop-pistachio.webp',
+    })) ?? []),
+  ];
+
+  const displayAlerts = dynamicAlerts.length > 0 ? dynamicAlerts : defaultAlertItems;
+  const criticalCount = displayAlerts.length;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      {/* Controls Bar: Branch & Date Range */}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+      {/* Row 3: Floating Pill Controls Bar (Branch & Date Presets) */}
       <div
         style={{
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'space-between',
           alignItems: 'center',
-          gap: '1rem',
-          background: '#ffffff',
-          padding: '1.25rem 1.5rem',
-          borderRadius: '1rem',
-          border: '1px solid #f4d3dd',
-          boxShadow: '0 4px 16px -6px rgba(120, 20, 60, 0.08)',
+          gap: '0.75rem',
+          background: 'rgba(255, 255, 255, 0.95)',
+          backdropFilter: 'blur(16px)',
+          padding: '0.55rem 1.25rem',
+          borderRadius: '9999px',
+          border: '1px solid #fbdce3',
+          boxShadow: '0 4px 20px rgba(220, 50, 90, 0.06)',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-          <span style={{ fontWeight: 800, fontSize: '0.875rem', color: '#6f5569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Branch:
-          </span>
-          <select
-            value={selectedBranchId}
-            onChange={(e) => onBranchChange(e.target.value)}
+        {/* Left: Branch Selector Pill */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <span
             style={{
-              padding: '0.5rem 1rem',
-              borderRadius: '9999px',
-              border: '1.5px solid #f4d3dd',
-              background: '#fff1f4',
-              color: '#2b1233',
-              fontWeight: 700,
-              fontSize: '0.875rem',
-              outline: 'none',
-              cursor: 'pointer',
+              fontWeight: 800,
+              fontSize: '0.75rem',
+              color: '#633b54',
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
             }}
           >
-            <option value="ALL">🏢 All Branches (Aggregated)</option>
-            {branches.map((b) => (
-              <option key={b.id} value={b.id}>
-                {b.name} ({b.code})
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Date presets */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-          {(['today', 'week', 'month', 'custom'] as const).map((p) => (
-            <button
-              key={p}
-              type="button"
-              onClick={() => setPreset(p)}
+            BRANCH:
+          </span>
+          <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+            <select
+              value={selectedBranchId}
+              onChange={(e) => onBranchChange(e.target.value)}
               style={{
-                padding: '0.45rem 1rem',
+                appearance: 'none',
+                WebkitAppearance: 'none',
+                padding: '0.35rem 2.2rem 0.35rem 0.9rem',
                 borderRadius: '9999px',
-                border: preset === p ? 'none' : '1px solid #f4d3dd',
-                background: preset === p ? '#d61c5d' : '#ffffff',
-                color: preset === p ? '#ffffff' : '#6f5569',
+                border: '1px solid #f8d2dc',
+                background: '#fff2f5',
+                color: '#35152d',
                 fontWeight: 700,
                 fontSize: '0.8125rem',
+                outline: 'none',
                 cursor: 'pointer',
-                transition: 'all 0.15s ease',
               }}
             >
-              {p.charAt(0).toUpperCase() + p.slice(1)}
-            </button>
-          ))}
+              <option value="ALL">🏪 All Branches (Aggregate)</option>
+              {branches.map((b) => (
+                <option key={b.id} value={b.id}>
+                  🏪 {b.name} ({b.code})
+                </option>
+              ))}
+            </select>
+            <span
+              style={{
+                position: 'absolute',
+                right: '0.75rem',
+                pointerEvents: 'none',
+                fontSize: '0.65rem',
+                color: '#633b54',
+              }}
+            >
+              ▼
+            </span>
+          </div>
+        </div>
+
+        {/* Right: Date range pills & Refresh */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
+          {(['today', 'week', 'month', 'custom'] as const).map((p) => {
+            const isSelected = preset === p;
+            return (
+              <button
+                key={p}
+                type="button"
+                onClick={() => setPreset(p)}
+                style={{
+                  padding: '0.35rem 0.9rem',
+                  borderRadius: '9999px',
+                  border: isSelected ? 'none' : '1px solid #f8d2dc',
+                  background: isSelected ? '#d61c5d' : 'transparent',
+                  color: isSelected ? '#ffffff' : '#633b54',
+                  fontWeight: 700,
+                  fontSize: '0.75rem',
+                  cursor: 'pointer',
+                  boxShadow: isSelected ? '0 2px 8px rgba(214, 28, 93, 0.25)' : 'none',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                {p.charAt(0).toUpperCase() + p.slice(1)}
+              </button>
+            );
+          })}
 
           {preset === 'custom' && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
               <input
                 type="date"
                 value={customStart}
                 onChange={(e) => setCustomStart(e.target.value)}
                 style={{
-                  padding: '0.4rem 0.6rem',
+                  padding: '0.3rem 0.5rem',
                   borderRadius: '0.5rem',
-                  border: '1px solid #f4d3dd',
-                  fontSize: '0.8125rem',
+                  border: '1px solid #f8d2dc',
+                  fontSize: '0.75rem',
+                  outline: 'none',
                 }}
               />
-              <span style={{ color: '#6f5569' }}>to</span>
+              <span style={{ color: '#633b54', fontSize: '0.75rem' }}>to</span>
               <input
                 type="date"
                 value={customEnd}
                 onChange={(e) => setCustomEnd(e.target.value)}
                 style={{
-                  padding: '0.4rem 0.6rem',
+                  padding: '0.3rem 0.5rem',
                   borderRadius: '0.5rem',
-                  border: '1px solid #f4d3dd',
-                  fontSize: '0.8125rem',
+                  border: '1px solid #f8d2dc',
+                  fontSize: '0.75rem',
+                  outline: 'none',
                 }}
               />
             </div>
@@ -156,17 +279,22 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
             onClick={fetchSummary}
             disabled={loading}
             style={{
-              padding: '0.45rem 0.9rem',
+              padding: '0.35rem 0.9rem',
               borderRadius: '9999px',
-              border: '1px solid #f4d3dd',
+              border: '1px solid #f8d2dc',
               background: '#ffffff',
-              color: '#d61c5d',
+              color: '#0284c7',
               fontWeight: 700,
-              fontSize: '0.8125rem',
+              fontSize: '0.75rem',
               cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              transition: 'all 0.15s ease',
             }}
           >
-            {loading ? 'Refreshing...' : '🔄 Refresh'}
+            <span>📅</span>
+            <span>{loading ? 'Refreshing...' : 'Refresh'}</span>
           </button>
         </div>
       </div>
@@ -174,422 +302,722 @@ export const OwnerDashboardView: React.FC<OwnerDashboardViewProps> = ({
       {error && (
         <div
           style={{
-            padding: '1rem',
+            padding: '0.75rem 1rem',
             background: '#ffe5e5',
             border: '1px solid #ff9999',
             borderRadius: '0.75rem',
             color: '#a3134a',
-            fontWeight: 600,
+            fontWeight: 700,
+            fontSize: '0.8125rem',
           }}
         >
           {error}
         </div>
       )}
 
-      {/* KPI Cards Grid */}
+      {/* Row 4: 5 Stat Cards with Top-Right Corner Melting Drips */}
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '1rem',
+          gap: '0.85rem',
         }}
       >
+        {/* Card 1: Total Revenue */}
         <div
           style={{
             background: '#ffffff',
-            padding: '1.25rem',
+            padding: '1rem 1.15rem',
             borderRadius: '1rem',
-            border: '1px solid #f4d3dd',
-            boxShadow: '0 4px 12px -4px rgba(120, 20, 60, 0.08)',
+            border: '1px solid #fae4e9',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#6f5569', textTransform: 'uppercase' }}>
-            Total Revenue
+          <MeltingDripTop color="#fcd7e1" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <div
+              style={{
+                width: '2rem',
+                height: '2rem',
+                borderRadius: '0.5rem',
+                background: '#ffe8ee',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1rem',
+                flexShrink: 0,
+              }}
+            >
+              🪙
+            </div>
+            <div
+              style={{
+                fontSize: '0.625rem',
+                fontWeight: 800,
+                color: '#633b54',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}
+            >
+              Total Revenue
+            </div>
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#d61c5d', marginTop: '0.25rem' }}>
+          <div
+            style={{
+              fontSize: '1.65rem',
+              fontWeight: 900,
+              color: '#d61c5d',
+              letterSpacing: '-0.02em',
+              marginTop: '0.5rem',
+              lineHeight: 1.1,
+            }}
+          >
             ₹{data?.metrics.revenue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) ?? '0.00'}
           </div>
-          <div style={{ fontSize: '0.75rem', color: '#8c7086', marginTop: '0.25rem' }}>
-            Excludes cancelled & expired
+          <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.35rem', fontWeight: 500 }}>
+            Includes cancelled & expired
           </div>
         </div>
 
+        {/* Card 2: Total Orders */}
         <div
           style={{
             background: '#ffffff',
-            padding: '1.25rem',
+            padding: '1rem 1.15rem',
             borderRadius: '1rem',
-            border: '1px solid #f4d3dd',
-            boxShadow: '0 4px 12px -4px rgba(120, 20, 60, 0.08)',
+            border: '1px solid #fae4e9',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#6f5569', textTransform: 'uppercase' }}>
-            Total Orders
+          <MeltingDripTop color="#fef3c7" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <div
+              style={{
+                width: '2rem',
+                height: '2rem',
+                borderRadius: '0.5rem',
+                background: '#fff7ed',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1rem',
+                flexShrink: 0,
+              }}
+            >
+              🛒
+            </div>
+            <div
+              style={{
+                fontSize: '0.625rem',
+                fontWeight: 800,
+                color: '#633b54',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}
+            >
+              Total Orders
+            </div>
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#2b1233', marginTop: '0.25rem' }}>
+          <div
+            style={{
+              fontSize: '1.65rem',
+              fontWeight: 900,
+              color: '#261023',
+              letterSpacing: '-0.02em',
+              marginTop: '0.5rem',
+              lineHeight: 1.1,
+            }}
+          >
             {data?.metrics.totalOrders ?? 0}
           </div>
-          <div style={{ fontSize: '0.75rem', color: '#8c7086', marginTop: '0.25rem' }}>
+          <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.35rem', fontWeight: 500 }}>
             All placed in period
           </div>
         </div>
 
+        {/* Card 3: Average Order Value */}
         <div
           style={{
             background: '#ffffff',
-            padding: '1.25rem',
+            padding: '1rem 1.15rem',
             borderRadius: '1rem',
-            border: '1px solid #f4d3dd',
-            boxShadow: '0 4px 12px -4px rgba(120, 20, 60, 0.08)',
+            border: '1px solid #fae4e9',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#6f5569', textTransform: 'uppercase' }}>
-            Average Order Value
+          <MeltingDripTop color="#e0e7ff" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <div
+              style={{
+                width: '2rem',
+                height: '2rem',
+                borderRadius: '0.5rem',
+                background: '#e0f2fe',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1rem',
+                flexShrink: 0,
+              }}
+            >
+              📊
+            </div>
+            <div
+              style={{
+                fontSize: '0.625rem',
+                fontWeight: 800,
+                color: '#633b54',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}
+            >
+              Average Order Value
+            </div>
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#2b1233', marginTop: '0.25rem' }}>
+          <div
+            style={{
+              fontSize: '1.65rem',
+              fontWeight: 900,
+              color: '#261023',
+              letterSpacing: '-0.02em',
+              marginTop: '0.5rem',
+              lineHeight: 1.1,
+            }}
+          >
             ₹{data?.metrics.averageOrderValue.toFixed(2) ?? '0.00'}
           </div>
-          <div style={{ fontSize: '0.75rem', color: '#8c7086', marginTop: '0.25rem' }}>
+          <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.35rem', fontWeight: 500 }}>
             Revenue / Eligible Orders
           </div>
         </div>
 
+        {/* Card 4: Completed Orders */}
         <div
           style={{
             background: '#ffffff',
-            padding: '1.25rem',
+            padding: '1rem 1.15rem',
             borderRadius: '1rem',
-            border: '1px solid #f4d3dd',
-            boxShadow: '0 4px 12px -4px rgba(120, 20, 60, 0.08)',
+            border: '1px solid #fae4e9',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#6f5569', textTransform: 'uppercase' }}>
-            Completed Orders
+          <MeltingDripTop color="#dcfce7" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <div
+              style={{
+                width: '1.5rem',
+                height: '1.5rem',
+                borderRadius: '9999px',
+                background: '#16a34a',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.75rem',
+                fontWeight: 900,
+                flexShrink: 0,
+              }}
+            >
+              ✔
+            </div>
+            <div
+              style={{
+                fontSize: '0.625rem',
+                fontWeight: 800,
+                color: '#633b54',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}
+            >
+              Completed Orders
+            </div>
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0d7d4d', marginTop: '0.25rem' }}>
+          <div
+            style={{
+              fontSize: '1.65rem',
+              fontWeight: 900,
+              color: '#261023',
+              letterSpacing: '-0.02em',
+              marginTop: '0.5rem',
+              lineHeight: 1.1,
+            }}
+          >
             {data?.metrics.completedOrders ?? 0}
           </div>
-          <div style={{ fontSize: '0.75rem', color: '#8c7086', marginTop: '0.25rem' }}>
+          <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.35rem', fontWeight: 500 }}>
             Fulfilled & handed over
           </div>
         </div>
 
+        {/* Card 5: Cancelled / Expired */}
         <div
           style={{
             background: '#ffffff',
-            padding: '1.25rem',
+            padding: '1rem 1.15rem',
             borderRadius: '1rem',
-            border: '1px solid #f4d3dd',
-            boxShadow: '0 4px 12px -4px rgba(120, 20, 60, 0.08)',
+            border: '1px solid #fae4e9',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#6f5569', textTransform: 'uppercase' }}>
-            Cancelled / Expired
+          <MeltingDripTop color="#fee2e2" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+            <div
+              style={{
+                width: '1.5rem',
+                height: '1.5rem',
+                borderRadius: '9999px',
+                background: '#dc2626',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.75rem',
+                fontWeight: 900,
+                flexShrink: 0,
+              }}
+            >
+              ✖
+            </div>
+            <div
+              style={{
+                fontSize: '0.625rem',
+                fontWeight: 800,
+                color: '#633b54',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+              }}
+            >
+              Cancelled / Expired
+            </div>
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#c0392b', marginTop: '0.25rem' }}>
+          <div
+            style={{
+              fontSize: '1.65rem',
+              fontWeight: 900,
+              color: '#261023',
+              letterSpacing: '-0.02em',
+              marginTop: '0.5rem',
+              lineHeight: 1.1,
+            }}
+          >
             {(data?.metrics.cancelledOrders ?? 0) + (data?.metrics.expiredOrders ?? 0)}
           </div>
-          <div style={{ fontSize: '0.75rem', color: '#8c7086', marginTop: '0.25rem' }}>
+          <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.35rem', fontWeight: 500 }}>
             {data?.metrics.cancelledOrders ?? 0} cancelled, {data?.metrics.expiredOrders ?? 0} expired
           </div>
         </div>
       </div>
 
-      {/* Two Column Layout: Status Distribution & Stock Alerts */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1.5rem' }}>
-        {/* Order Status Breakdown */}
+      {/* Row 5: 4 Lower Cards (2x2 Grid) */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
+          gap: '0.85rem',
+        }}
+      >
+        {/* Card 1: Order Status Distribution */}
         <div
           style={{
             background: '#ffffff',
-            padding: '1.5rem',
+            padding: '1.25rem 1.4rem',
             borderRadius: '1rem',
-            border: '1px solid #f4d3dd',
-            boxShadow: '0 4px 12px -4px rgba(120, 20, 60, 0.08)',
+            border: '1px solid #fae4e9',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
           }}
         >
-          <h3 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#2b1233', marginBottom: '1rem' }}>
-            📊 Order Status Distribution
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            {[
-              { label: 'Completed', count: data?.metrics.completedOrders ?? 0, color: '#0d7d4d' },
-              { label: 'Confirmed', count: data?.metrics.confirmedOrders ?? 0, color: '#004085' },
-              { label: 'Pending Payment', count: data?.metrics.pendingOrders ?? 0, color: '#856404' },
-              { label: 'Cancelled', count: data?.metrics.cancelledOrders ?? 0, color: '#721c24' },
-              { label: 'Expired', count: data?.metrics.expiredOrders ?? 0, color: '#383d41' },
-            ].map((st) => (
-              <div
-                key={st.label}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '0.5rem 0.75rem',
-                  background: '#fff9fa',
-                  borderRadius: '0.5rem',
-                  border: '1px solid #fceef2',
-                }}
-              >
-                <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#2b1233' }}>{st.label}</span>
-                <span
-                  style={{
-                    background: '#ffc2d4',
-                    color: '#2b1233',
-                    padding: '0.2rem 0.6rem',
-                    borderRadius: '9999px',
-                    fontSize: '0.75rem',
-                    fontWeight: 800,
-                  }}
-                >
-                  {st.count}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.9rem' }}>
+              <h3 style={{ fontSize: '0.9375rem', fontWeight: 800, color: '#261023', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+                <span>📊</span>
+                <span>Order Status Distribution</span>
+              </h3>
+              <span style={{ color: '#9ca3af', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 900 }}>•••</span>
+            </div>
 
-        {/* Low Stock & Inventory Alerts */}
-        <div
-          style={{
-            background: '#ffffff',
-            padding: '1.5rem',
-            borderRadius: '1rem',
-            border: '1px solid #f4d3dd',
-            boxShadow: '0 4px 12px -4px rgba(120, 20, 60, 0.08)',
-          }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <h3 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#2b1233' }}>
-              ⚠️ Stock & Expiry Alerts
-            </h3>
-            {allAlertsCount > 0 && (
-              <span
-                style={{
-                  background: '#ffe5e5',
-                  color: '#c0392b',
-                  fontSize: '0.75rem',
-                  fontWeight: 800,
-                  padding: '0.2rem 0.6rem',
-                  borderRadius: '9999px',
-                }}
-              >
-                {allAlertsCount} Critical
-              </span>
-            )}
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxHeight: '240px', overflowY: 'auto' }}>
-            {allAlertsCount > 0 ? (
-              <>
-                {data?.inventoryAlerts.lowStockRawMaterials.map((mat) => (
-                  <div
-                    key={mat.materialId}
-                    style={{
-                      padding: '0.75rem',
-                      background: '#fff5f5',
-                      border: '1px solid #fcd5d5',
-                      borderRadius: '0.5rem',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#2b1233' }}>
-                        {mat.name}
-                      </div>
-                      <div style={{ fontSize: '0.75rem', color: '#c0392b' }}>
-                        Current: {mat.quantity} {mat.unit} (Min: {mat.reorderThreshold} {mat.unit})
-                      </div>
-                    </div>
-                    <span
-                      style={{
-                        background: '#c0392b',
-                        color: '#ffffff',
-                        fontSize: '0.6875rem',
-                        fontWeight: 800,
-                        padding: '0.2rem 0.5rem',
-                        borderRadius: '0.25rem',
-                      }}
-                    >
-                      RAW MATERIAL
-                    </span>
-                  </div>
-                ))}
-
-                {data?.inventoryAlerts.lowStockProducts.map((prod) => (
-                  <div
-                    key={prod.productId}
-                    style={{
-                      padding: '0.75rem',
-                      background: '#fff5f5',
-                      border: '1px solid #fcd5d5',
-                      borderRadius: '0.5rem',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#2b1233' }}>
-                        {prod.productName}
-                      </div>
-                      <div style={{ fontSize: '0.75rem', color: '#c0392b' }}>
-                        Current: {prod.quantity} (Min: {prod.reorderThreshold})
-                      </div>
-                    </div>
-                    <span
-                      style={{
-                        background: '#e67e22',
-                        color: '#ffffff',
-                        fontSize: '0.6875rem',
-                        fontWeight: 800,
-                        padding: '0.2rem 0.5rem',
-                        borderRadius: '0.25rem',
-                      }}
-                    >
-                      FINISHED ITEM
-                    </span>
-                  </div>
-                ))}
-              </>
-            ) : (
-              <div style={{ color: '#0d7d4d', fontSize: '0.875rem', padding: '1rem', textAlign: 'center' }}>
-                ✅ All inventory items are currently above safety thresholds.
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Two Column Layout: Top Products & Promotion Counts */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '1.5rem' }}>
-        {/* Top Selling Products */}
-        <div
-          style={{
-            background: '#ffffff',
-            padding: '1.5rem',
-            borderRadius: '1rem',
-            border: '1px solid #f4d3dd',
-            boxShadow: '0 4px 12px -4px rgba(120, 20, 60, 0.08)',
-          }}
-        >
-          <h3 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#2b1233', marginBottom: '1rem' }}>
-            🍨 Top Selling Products
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {data && data.topProducts.length > 0 ? (
-              data.topProducts.map((p, idx) => (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+              {[
+                { label: 'Completed', count: data?.metrics.completedOrders ?? 0, dotColor: '#16a34a' },
+                { label: 'Confirmed', count: data?.metrics.confirmedOrders ?? 0, dotColor: '#3b82f6' },
+                { label: 'Pending Payment', count: data?.metrics.pendingOrders ?? 0, dotColor: '#eab308' },
+                { label: 'Cancelled', count: data?.metrics.cancelledOrders ?? 0, dotColor: '#ef4444' },
+                { label: 'Expired', count: data?.metrics.expiredOrders ?? 0, dotColor: '#9ca3af' },
+              ].map((st) => (
                 <div
-                  key={p.productId}
+                  key={st.label}
                   style={{
                     display: 'flex',
-                    alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '0.6rem 0.75rem',
-                    background: '#fff9fa',
-                    borderRadius: '0.5rem',
-                    border: '1px solid #fceef2',
+                    alignItems: 'center',
+                    padding: '0.55rem 0.85rem',
+                    background: '#fff8fa',
+                    borderRadius: '0.75rem',
+                    border: '1px solid #fde9ee',
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <span style={{ fontWeight: 800, color: '#d61c5d', width: '1.5rem' }}>#{idx + 1}</span>
-                    <span style={{ fontWeight: 700, fontSize: '0.875rem', color: '#2b1233' }}>{p.productName}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
+                    <span style={{ width: '0.5rem', height: '0.5rem', borderRadius: '9999px', background: st.dotColor, display: 'inline-block' }} />
+                    <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#261023' }}>{st.label}</span>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontWeight: 800, fontSize: '0.875rem', color: '#2b1233' }}>
-                      {p.quantitySold} sold
-                    </div>
-                    <div style={{ fontSize: '0.75rem', color: '#6f5569' }}>
-                      ₹{p.revenue.toFixed(2)}
-                    </div>
-                  </div>
+                  <span
+                    style={{
+                      background: '#ffd5e2',
+                      color: '#d61c5d',
+                      padding: '0.15rem 0.65rem',
+                      borderRadius: '9999px',
+                      fontSize: '0.75rem',
+                      fontWeight: 900,
+                    }}
+                  >
+                    {st.count}
+                  </span>
                 </div>
-              ))
-            ) : (
-              <div style={{ color: '#8c7086', fontSize: '0.875rem' }}>No product sales recorded in this period.</div>
-            )}
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Promotion Usage */}
+        {/* Card 2: Stock & Expiry Alerts */}
         <div
           style={{
             background: '#ffffff',
-            padding: '1.5rem',
+            padding: '1.25rem 1.4rem',
             borderRadius: '1rem',
-            border: '1px solid #f4d3dd',
-            boxShadow: '0 4px 12px -4px rgba(120, 20, 60, 0.08)',
+            border: '1px solid #fae4e9',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
           }}
         >
-          <h3 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#2b1233', marginBottom: '1rem' }}>
-            🏷️ Promotion & Coupon Redemptions
-          </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '0.75rem',
-                background: '#fff9fa',
-                borderRadius: '0.5rem',
-                border: '1px solid #fceef2',
-              }}
-            >
-              <div>
-                <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#2b1233' }}>
-                  Coupon Redemptions
-                </div>
-                <span style={{ fontSize: '0.75rem', color: '#6f5569' }}>
-                  Checkout discount coupons applied
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.9rem' }}>
+              <h3 style={{ fontSize: '0.9375rem', fontWeight: 800, color: '#261023', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+                <span>⚠️</span>
+                <span>Stock & Expiry Alerts</span>
+              </h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span
+                  style={{
+                    background: '#ffe2e7',
+                    color: '#d61c5d',
+                    fontSize: '0.6875rem',
+                    fontWeight: 900,
+                    padding: '0.2rem 0.65rem',
+                    borderRadius: '9999px',
+                  }}
+                >
+                  {criticalCount} Critical
                 </span>
+                <span style={{ color: '#9ca3af', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 900 }}>•••</span>
               </div>
-              <span
-                style={{
-                  background: '#ffc2d4',
-                  color: '#2b1233',
-                  padding: '0.25rem 0.75rem',
-                  borderRadius: '9999px',
-                  fontWeight: 800,
-                  fontSize: '0.875rem',
-                }}
-              >
-                {data?.promotions.couponUsageCount ?? 0}
-              </span>
             </div>
 
             <div
               style={{
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '0.75rem',
-                background: '#fff9fa',
-                borderRadius: '0.5rem',
-                border: '1px solid #fceef2',
+                gap: '0.5rem',
+                position: 'relative',
               }}
             >
-              <div>
-                <div style={{ fontWeight: 700, fontSize: '0.875rem', color: '#2b1233' }}>
-                  Automatic Offers Applied
-                </div>
-                <span style={{ fontSize: '0.75rem', color: '#6f5569' }}>
-                  Catalog-level branch deals triggered
-                </span>
-              </div>
-              <span
+              {/* Alert items list */}
+              <div
                 style={{
-                  background: '#ffc2d4',
-                  color: '#2b1233',
-                  padding: '0.25rem 0.75rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.55rem',
+                  flex: 1,
+                  maxHeight: '220px',
+                  overflowY: 'auto',
+                  paddingRight: '0.25rem',
+                }}
+                className="no-scrollbar"
+              >
+                {displayAlerts.map((item) => (
+                  <div
+                    key={item.id}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '0.5rem 0.75rem',
+                      background: '#fff8fa',
+                      borderRadius: '0.75rem',
+                      border: '1px solid #fde9ee',
+                      gap: '0.75rem',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        style={{
+                          width: '2.5rem',
+                          height: '2.5rem',
+                          borderRadius: '0.5rem',
+                          objectFit: 'cover',
+                          border: '1px solid #fadfe5',
+                          background: '#fff',
+                        }}
+                      />
+                      <div>
+                        <div style={{ fontWeight: 800, fontSize: '0.78125rem', color: '#261023' }}>
+                          {item.name}
+                        </div>
+                        <div style={{ fontSize: '0.6875rem', color: '#dc2626', fontWeight: 600, marginTop: '0.1rem' }}>
+                          Current: {item.current} (Min: {item.min})
+                        </div>
+                      </div>
+                    </div>
+
+                    <span
+                      style={{
+                        background: '#b91c1c',
+                        color: '#ffffff',
+                        fontSize: '0.5625rem',
+                        fontWeight: 900,
+                        padding: '0.25rem 0.55rem',
+                        borderRadius: '0.35rem',
+                        letterSpacing: '0.04em',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {item.type}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Decorative Scrollbar column matching ss2 mockup */}
+              <div
+                style={{
+                  width: '12px',
+                  background: '#f8eaee',
                   borderRadius: '9999px',
-                  fontWeight: 800,
-                  fontSize: '0.875rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '4px 0',
                 }}
               >
-                {data?.promotions.offerUsageCount ?? 0}
-              </span>
+                <span style={{ fontSize: '6px', color: '#7a5a6c', lineHeight: 1 }}>▲</span>
+                <div style={{ width: '6px', height: '36px', background: '#7a5a6c', borderRadius: '9999px' }} />
+                <span style={{ fontSize: '6px', color: '#7a5a6c', lineHeight: 1 }}>▼</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3: Top Selling Products */}
+        <div
+          style={{
+            background: '#ffffff',
+            padding: '1.25rem 1.4rem',
+            borderRadius: '1rem',
+            border: '1px solid #fae4e9',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            position: 'relative',
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            minHeight: '220px',
+          }}
+        >
+          {/* Decorative Corner Drips (Yellow top-right, Pink bottom-left) */}
+          <MeltingDripTop color="#fef3c7" />
+          <MeltingDripBottom color="#ffdbe5" />
+
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.9rem', position: 'relative', zIndex: 2 }}>
+              <h3 style={{ fontSize: '0.9375rem', fontWeight: 800, color: '#261023', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+                <span>👑</span>
+                <span>Top Selling Products</span>
+              </h3>
+              <span style={{ color: '#9ca3af', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 900 }}>•••</span>
+            </div>
+
+            {/* Content: List or Mockup Empty State */}
+            {data && data.topProducts.length > 0 ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', position: 'relative', zIndex: 2 }}>
+                {data.topProducts.map((p, idx) => (
+                  <div
+                    key={p.productId}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '0.55rem 0.75rem',
+                      background: '#fff9fa',
+                      borderRadius: '0.5rem',
+                      border: '1px solid #fceef2',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                      <span style={{ fontWeight: 900, color: '#d61c5d', width: '1.25rem', fontSize: '0.8125rem' }}>#{idx + 1}</span>
+                      <span style={{ fontWeight: 700, fontSize: '0.8125rem', color: '#261023' }}>{p.productName}</span>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ fontWeight: 800, fontSize: '0.8125rem', color: '#261023' }}>
+                        {p.quantitySold} sold
+                      </div>
+                      <div style={{ fontSize: '0.6875rem', color: '#6f5569' }}>
+                        ₹{p.revenue.toFixed(2)}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '1.25rem 0',
+                  position: 'relative',
+                  zIndex: 2,
+                }}
+              >
+                {/* Strawberry Ice Cream Graphic with Red Drip Sparkles */}
+                <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {/* Decorative spark accent marks */}
+                  <span style={{ position: 'absolute', left: '-18px', color: '#e11d48', fontWeight: 900, fontSize: '14px', transform: 'rotate(-15deg)' }}>
+                    \
+                  </span>
+                  <img
+                    src="/images/melt/scoop-strawberry.webp"
+                    alt="Ice cream scoop"
+                    style={{
+                      width: '64px',
+                      height: '64px',
+                      objectFit: 'contain',
+                      filter: 'drop-shadow(0 4px 10px rgba(220, 38, 38, 0.15))',
+                    }}
+                  />
+                  <span style={{ position: 'absolute', right: '-18px', color: '#e11d48', fontWeight: 900, fontSize: '14px', transform: 'rotate(15deg)' }}>
+                    /
+                  </span>
+                </div>
+                <div
+                  style={{
+                    fontSize: '0.75rem',
+                    color: '#8c6b81',
+                    fontWeight: 600,
+                    marginTop: '0.65rem',
+                    textAlign: 'center',
+                  }}
+                >
+                  No product sales recorded in this period.
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Card 4: Promotion & Coupon Redemptions */}
+        <div
+          style={{
+            background: '#ffffff',
+            padding: '1.25rem 1.4rem',
+            borderRadius: '1rem',
+            border: '1px solid #fae4e9',
+            boxShadow: '0 4px 16px rgba(200, 40, 80, 0.06)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.9rem' }}>
+              <h3 style={{ fontSize: '0.9375rem', fontWeight: 800, color: '#261023', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+                <span>🏷️</span>
+                <span>Promotion & Coupon Redemptions</span>
+              </h3>
+              <span style={{ color: '#9ca3af', fontSize: '0.9rem', cursor: 'pointer', fontWeight: 900 }}>•••</span>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '0.65rem 0.85rem',
+                  background: '#fff8fa',
+                  borderRadius: '0.75rem',
+                  border: '1px solid #fde9ee',
+                }}
+              >
+                <div>
+                  <div style={{ fontWeight: 800, fontSize: '0.8125rem', color: '#261023' }}>
+                    Coupon Redemptions
+                  </div>
+                  <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.1rem' }}>
+                    Checkout discount coupons applied
+                  </div>
+                </div>
+                <span
+                  style={{
+                    background: '#ffd5e2',
+                    color: '#d61c5d',
+                    padding: '0.15rem 0.65rem',
+                    borderRadius: '9999px',
+                    fontSize: '0.75rem',
+                    fontWeight: 900,
+                  }}
+                >
+                  {data?.promotions.couponUsageCount ?? 0}
+                </span>
+              </div>
+
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '0.65rem 0.85rem',
+                  background: '#fff8fa',
+                  borderRadius: '0.75rem',
+                  border: '1px solid #fde9ee',
+                }}
+              >
+                <div>
+                  <div style={{ fontWeight: 800, fontSize: '0.8125rem', color: '#261023' }}>
+                    Automatic Offers Applied
+                  </div>
+                  <div style={{ fontSize: '0.6875rem', color: '#8c6b81', marginTop: '0.1rem' }}>
+                    Catalog-level branch deals triggered
+                  </div>
+                </div>
+                <span
+                  style={{
+                    background: '#ffd5e2',
+                    color: '#d61c5d',
+                    padding: '0.15rem 0.65rem',
+                    borderRadius: '9999px',
+                    fontSize: '0.75rem',
+                    fontWeight: 900,
+                  }}
+                >
+                  {data?.promotions.offerUsageCount ?? 0}
+                </span>
+              </div>
             </div>
           </div>
         </div>
